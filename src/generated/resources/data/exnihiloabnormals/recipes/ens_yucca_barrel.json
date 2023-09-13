@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "exnihilosequentia",
+  "key": {
+    "-": {
+      "item": "atmospheric:yucca_slab"
+    },
+    "x": {
+      "item": "atmospheric:yucca_planks"
+    }
+  },
+  "pattern": [
+    "x x",
+    "x x",
+    "x-x"
+  ],
+  "result": {
+    "item": "exnihiloabnormals:yucca_barrel"
+  }
+}

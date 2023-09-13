@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/crucible_base",
+  "textures": {
+    "particle": "environmental:block/willow_planks",
+    "texture": "exnihiloabnormals:block/willow_crucible"
+  }
+}

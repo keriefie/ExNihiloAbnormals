@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/crucible_base",
+  "textures": {
+    "particle": "atmospheric:block/rosewood_planks",
+    "texture": "exnihiloabnormals:block/rosewood_crucible"
+  }
+}

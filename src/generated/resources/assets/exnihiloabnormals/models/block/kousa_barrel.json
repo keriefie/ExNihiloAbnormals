@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/barrel_base",
+  "textures": {
+    "particle": "atmospheric:block/kousa_planks",
+    "texture": "exnihiloabnormals:block/kousa_barrel"
+  }
+}

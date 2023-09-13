@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "f": {
+      "item": "exnihilosequentia:beehive_frame"
+    },
+    "x": {
+      "item": "atmospheric:morado_planks"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "fff",
+    "xxx"
+  ],
+  "result": {
+    "item": "atmospheric:morado_beehive"
+  }
+}

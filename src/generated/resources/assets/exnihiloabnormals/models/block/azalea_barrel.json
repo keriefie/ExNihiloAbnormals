@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/barrel_base",
+  "textures": {
+    "particle": "caverns_and_chasms:block/azalea_planks",
+    "texture": "exnihiloabnormals:block/azalea_barrel"
+  }
+}

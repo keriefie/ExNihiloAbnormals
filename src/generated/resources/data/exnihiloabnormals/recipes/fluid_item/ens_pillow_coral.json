@@ -1,0 +1,12 @@
+{
+  "type": "exnihilosequentia:fluid_item",
+  "fluid": {
+    "fluid": "exnihilosequentia:sea_water"
+  },
+  "input": {
+    "item": "exnihiloabnormals:pillow_coral_larva"
+  },
+  "result": {
+    "item": "upgrade_aquatic:pillow_coral_block"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/sieve_base",
+  "textures": {
+    "particle": "endergetic:block/poise_planks",
+    "texture": "exnihiloabnormals:block/poise_sieve"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/sieve_base",
+  "textures": {
+    "particle": "environmental:block/cherry_planks",
+    "texture": "exnihiloabnormals:block/cherry_sieve"
+  }
+}

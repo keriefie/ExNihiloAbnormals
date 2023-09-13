@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/crucible_base",
+  "textures": {
+    "particle": "caverns_and_chasms:block/azalea_planks",
+    "texture": "exnihiloabnormals:block/azalea_crucible"
+  }
+}

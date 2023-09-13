@@ -1,0 +1,15 @@
+{
+  "type": "exnihilosequentia:sieve",
+  "input": {
+    "item": "minecraft:sand"
+  },
+  "result": {
+    "item": "neapolitan:vanilla_pods"
+  },
+  "rolls": [
+    {
+      "chance": 0.03,
+      "mesh": "string"
+    }
+  ]
+}

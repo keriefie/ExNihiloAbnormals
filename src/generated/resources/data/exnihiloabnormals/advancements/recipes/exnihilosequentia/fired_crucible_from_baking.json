@@ -1,0 +1,46 @@
+{
+  "advancements": [
+    {
+      "advancement": {
+        "parent": "minecraft:recipes/root",
+        "criteria": {
+          "has_the_recipe": {
+            "conditions": {
+              "recipe": "exnihiloabnormals:fired_crucible_from_baking"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+          },
+          "has_unfired_crucible": {
+            "conditions": {
+              "items": [
+                {
+                  "items": [
+                    "exnihilosequentia:unfired_crucible"
+                  ]
+                }
+              ]
+            },
+            "trigger": "minecraft:inventory_changed"
+          }
+        },
+        "requirements": [
+          [
+            "has_unfired_crucible",
+            "has_the_recipe"
+          ]
+        ],
+        "rewards": {
+          "recipes": [
+            "exnihiloabnormals:fired_crucible_from_baking"
+          ]
+        }
+      },
+      "conditions": [
+        {
+          "type": "clayworks:config",
+          "value": "kiln"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "exnihilosequentia:heat",
+  "amount": 5,
+  "block": "caverns_and_chasms:soul_brazier",
+  "state": {
+    "lit": "true"
+  }
+}

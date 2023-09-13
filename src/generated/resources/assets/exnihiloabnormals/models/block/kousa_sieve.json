@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/sieve_base",
+  "textures": {
+    "particle": "atmospheric:block/kousa_planks",
+    "texture": "exnihiloabnormals:block/kousa_sieve"
+  }
+}

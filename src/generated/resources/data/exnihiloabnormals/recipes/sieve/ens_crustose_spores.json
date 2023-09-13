@@ -1,0 +1,15 @@
+{
+  "type": "exnihilosequentia:sieve",
+  "input": {
+    "tag": "minecraft:dirt"
+  },
+  "result": {
+    "item": "exnihiloabnormals:crustose_spores"
+  },
+  "rolls": [
+    {
+      "chance": 0.05,
+      "mesh": "string"
+    }
+  ]
+}

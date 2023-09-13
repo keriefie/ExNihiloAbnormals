@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "exnihilosequentia",
+  "key": {
+    "c": {
+      "item": "environmental:willow_planks"
+    },
+    "l": {
+      "item": "environmental:willow_slab"
+    },
+    "s": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "c c",
+    "clc",
+    "s s"
+  ],
+  "result": {
+    "item": "exnihiloabnormals:willow_crucible"
+  }
+}

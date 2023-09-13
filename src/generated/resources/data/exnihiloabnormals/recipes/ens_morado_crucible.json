@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "exnihilosequentia",
+  "key": {
+    "c": {
+      "item": "atmospheric:morado_planks"
+    },
+    "l": {
+      "item": "atmospheric:morado_slab"
+    },
+    "s": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "c c",
+    "clc",
+    "s s"
+  ],
+  "result": {
+    "item": "exnihiloabnormals:morado_crucible"
+  }
+}

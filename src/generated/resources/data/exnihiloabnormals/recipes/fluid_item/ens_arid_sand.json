@@ -1,0 +1,12 @@
+{
+  "type": "exnihilosequentia:fluid_item",
+  "fluid": {
+    "fluid": "exnihilosequentia:sea_water"
+  },
+  "input": {
+    "item": "minecraft:sand"
+  },
+  "result": {
+    "item": "atmospheric:arid_sand"
+  }
+}

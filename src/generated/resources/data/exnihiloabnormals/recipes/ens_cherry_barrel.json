@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "exnihilosequentia",
+  "key": {
+    "-": {
+      "item": "environmental:cherry_slab"
+    },
+    "x": {
+      "item": "environmental:cherry_planks"
+    }
+  },
+  "pattern": [
+    "x x",
+    "x x",
+    "x-x"
+  ],
+  "result": {
+    "item": "exnihiloabnormals:cherry_barrel"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "exnihilosequentia:hammer",
+  "input": {
+    "item": "atmospheric:ivory_travertine"
+  },
+  "results": [
+    {
+      "chance": 1.0,
+      "count": 1,
+      "item": "exnihiloabnormals:crushed_ivory_travertine"
+    }
+  ]
+}

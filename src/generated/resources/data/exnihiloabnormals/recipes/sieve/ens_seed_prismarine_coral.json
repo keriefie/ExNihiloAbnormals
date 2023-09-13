@@ -1,0 +1,16 @@
+{
+  "type": "exnihilosequentia:sieve",
+  "input": {
+    "tag": "minecraft:sand"
+  },
+  "result": {
+    "item": "exnihiloabnormals:prismarine_coral_larva"
+  },
+  "rolls": [
+    {
+      "chance": 0.025,
+      "mesh": "iron"
+    }
+  ],
+  "waterlogged": true
+}

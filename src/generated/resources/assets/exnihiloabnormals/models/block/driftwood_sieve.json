@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/sieve_base",
+  "textures": {
+    "particle": "upgrade_aquatic:block/driftwood_planks",
+    "texture": "exnihiloabnormals:block/driftwood_sieve"
+  }
+}

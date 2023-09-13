@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "exnihilosequentia",
+  "key": {
+    "c": {
+      "item": "upgrade_aquatic:driftwood_planks"
+    },
+    "l": {
+      "item": "upgrade_aquatic:driftwood_slab"
+    },
+    "s": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "c c",
+    "clc",
+    "s s"
+  ],
+  "result": {
+    "item": "exnihiloabnormals:driftwood_crucible"
+  }
+}

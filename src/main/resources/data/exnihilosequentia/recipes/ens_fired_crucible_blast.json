@@ -1,0 +1,37 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:or",
+          "values": [
+            {
+              "type": "forge:not",
+              "value": {
+                "type": "forge:mod_loaded",
+                "modid": "clayworks"
+              }
+            },
+            {
+              "type": "forge:not",
+              "value": {
+                "type": "clayworks:config",
+                "value": "kiln"
+              }
+            }
+          ]
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:blasting",
+        "cookingtime": 100,
+        "experience": 0.7,
+        "ingredient": {
+          "item": "exnihilosequentia:unfired_crucible"
+        },
+        "result": "exnihilosequentia:fired_crucible"
+      }
+    }
+  ]
+}

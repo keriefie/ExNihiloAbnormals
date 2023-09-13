@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/barrel_base",
+  "textures": {
+    "particle": "autumnity:block/maple_planks",
+    "texture": "exnihiloabnormals:block/maple_barrel"
+  }
+}

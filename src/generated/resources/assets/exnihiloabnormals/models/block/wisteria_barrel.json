@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/barrel_base",
+  "textures": {
+    "particle": "environmental:block/wisteria_planks",
+    "texture": "exnihiloabnormals:block/wisteria_barrel"
+  }
+}

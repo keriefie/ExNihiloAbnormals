@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/crucible_base",
+  "textures": {
+    "particle": "upgrade_aquatic:block/river_planks",
+    "texture": "exnihiloabnormals:block/river_crucible"
+  }
+}

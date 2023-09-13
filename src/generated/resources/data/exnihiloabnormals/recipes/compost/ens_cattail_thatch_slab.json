@@ -1,0 +1,7 @@
+{
+  "type": "exnihilosequentia:compost",
+  "amount": 50,
+  "input": {
+    "item": "environmental:cattail_thatch_slab"
+  }
+}

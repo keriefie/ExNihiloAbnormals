@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/crucible_base",
+  "textures": {
+    "particle": "autumnity:block/maple_planks",
+    "texture": "exnihiloabnormals:block/maple_crucible"
+  }
+}

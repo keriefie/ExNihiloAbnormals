@@ -1,0 +1,22 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "clayworks:config",
+          "value": "kiln"
+        }
+      ],
+      "recipe": {
+        "type": "clayworks:baking",
+        "cookingtime": 200,
+        "experience": 0.7,
+        "ingredient": {
+          "item": "exnihilosequentia:unfired_crucible"
+        },
+        "result": "exnihilosequentia:fired_crucible"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "exnihilosequentia:fluid_item",
+  "fluid": {
+    "fluid": "exnihilosequentia:sea_water"
+  },
+  "input": {
+    "item": "exnihiloabnormals:elder_prismarine_coral_larva"
+  },
+  "result": {
+    "item": "upgrade_aquatic:elder_prismarine_coral_block"
+  }
+}

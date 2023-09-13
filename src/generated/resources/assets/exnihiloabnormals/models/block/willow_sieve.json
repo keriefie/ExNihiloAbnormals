@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/sieve_base",
+  "textures": {
+    "particle": "environmental:block/willow_planks",
+    "texture": "exnihiloabnormals:block/willow_sieve"
+  }
+}

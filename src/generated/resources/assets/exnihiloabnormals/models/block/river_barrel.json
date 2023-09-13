@@ -1,0 +1,7 @@
+{
+  "parent": "exnihilosequentia:block/barrel_base",
+  "textures": {
+    "particle": "upgrade_aquatic:block/river_planks",
+    "texture": "exnihiloabnormals:block/river_barrel"
+  }
+}
