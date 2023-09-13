@@ -1,19 +1,41 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "f": {
-      "item": "exnihilosequentia:beehive_frame"
-    },
-    "x": {
-      "item": "caverns_and_chasms:azalea_planks"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:and",
+          "values": [
+            {
+              "type": "forge:mod_loaded",
+              "modid": "caverns_and_chasms"
+            },
+            {
+              "type": "forge:mod_loaded",
+              "modid": "woodworks"
+            }
+          ]
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "f": {
+            "item": "exnihilosequentia:beehive_frame"
+          },
+          "x": {
+            "item": "caverns_and_chasms:azalea_planks"
+          }
+        },
+        "pattern": [
+          "xxx",
+          "fff",
+          "xxx"
+        ],
+        "result": {
+          "item": "caverns_and_chasms:azalea_beehive"
+        }
+      }
     }
-  },
-  "pattern": [
-    "xxx",
-    "fff",
-    "xxx"
-  ],
-  "result": {
-    "item": "caverns_and_chasms:azalea_beehive"
-  }
+  ]
 }

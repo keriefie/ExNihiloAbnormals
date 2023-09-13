@@ -1,23 +1,36 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "c": {
-      "item": "caverns_and_chasms:azalea_planks"
-    },
-    "l": {
-      "item": "caverns_and_chasms:azalea_slab"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "caverns_and_chasms"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "c": {
+            "item": "caverns_and_chasms:azalea_planks"
+          },
+          "l": {
+            "item": "caverns_and_chasms:azalea_slab"
+          },
+          "s": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "pattern": [
+          "c c",
+          "clc",
+          "s s"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:azalea_crucible"
+        }
+      }
     }
-  },
-  "pattern": [
-    "c c",
-    "clc",
-    "s s"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:azalea_crucible"
-  }
+  ]
 }

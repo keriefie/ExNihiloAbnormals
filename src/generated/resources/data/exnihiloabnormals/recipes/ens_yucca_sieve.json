@@ -1,22 +1,35 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "l": {
-      "item": "atmospheric:yucca_slab"
-    },
-    "p": {
-      "item": "atmospheric:yucca_planks"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "l": {
+            "item": "atmospheric:yucca_slab"
+          },
+          "p": {
+            "item": "atmospheric:yucca_planks"
+          },
+          "s": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "pattern": [
+          "p p",
+          "plp",
+          "s s"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:yucca_sieve"
+        }
+      }
     }
-  },
-  "pattern": [
-    "p p",
-    "plp",
-    "s s"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:yucca_sieve"
-  }
+  ]
 }

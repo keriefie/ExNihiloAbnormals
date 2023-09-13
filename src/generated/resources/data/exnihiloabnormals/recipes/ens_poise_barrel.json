@@ -1,20 +1,33 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "-": {
-      "item": "endergetic:poise_slab"
-    },
-    "x": {
-      "item": "endergetic:poise_planks"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "endergetic"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "-": {
+            "item": "endergetic:poise_slab"
+          },
+          "x": {
+            "item": "endergetic:poise_planks"
+          }
+        },
+        "pattern": [
+          "x x",
+          "x x",
+          "x-x"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:poise_barrel"
+        }
+      }
     }
-  },
-  "pattern": [
-    "x x",
-    "x x",
-    "x-x"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:poise_barrel"
-  }
+  ]
 }

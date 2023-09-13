@@ -1,19 +1,32 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "f": {
-      "item": "exnihilosequentia:beehive_frame"
-    },
-    "x": {
-      "item": "minecraft:dark_oak_planks"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "woodworks"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "f": {
+            "item": "exnihilosequentia:beehive_frame"
+          },
+          "x": {
+            "item": "minecraft:dark_oak_planks"
+          }
+        },
+        "pattern": [
+          "xxx",
+          "fff",
+          "xxx"
+        ],
+        "result": {
+          "item": "woodworks:dark_oak_beehive"
+        }
+      }
     }
-  },
-  "pattern": [
-    "xxx",
-    "fff",
-    "xxx"
-  ],
-  "result": {
-    "item": "woodworks:dark_oak_beehive"
-  }
+  ]
 }

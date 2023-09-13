@@ -1,23 +1,36 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "c": {
-      "item": "atmospheric:rosewood_planks"
-    },
-    "l": {
-      "item": "atmospheric:rosewood_slab"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "c": {
+            "item": "atmospheric:rosewood_planks"
+          },
+          "l": {
+            "item": "atmospheric:rosewood_slab"
+          },
+          "s": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "pattern": [
+          "c c",
+          "clc",
+          "s s"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:rosewood_crucible"
+        }
+      }
     }
-  },
-  "pattern": [
-    "c c",
-    "clc",
-    "s s"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:rosewood_crucible"
-  }
+  ]
 }

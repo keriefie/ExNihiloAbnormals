@@ -1,22 +1,35 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "l": {
-      "item": "atmospheric:kousa_slab"
-    },
-    "p": {
-      "item": "atmospheric:kousa_planks"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "l": {
+            "item": "atmospheric:kousa_slab"
+          },
+          "p": {
+            "item": "atmospheric:kousa_planks"
+          },
+          "s": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "pattern": [
+          "p p",
+          "plp",
+          "s s"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:kousa_sieve"
+        }
+      }
     }
-  },
-  "pattern": [
-    "p p",
-    "plp",
-    "s s"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:kousa_sieve"
-  }
+  ]
 }

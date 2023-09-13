@@ -1,22 +1,35 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "l": {
-      "item": "caverns_and_chasms:azalea_slab"
-    },
-    "p": {
-      "item": "caverns_and_chasms:azalea_planks"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "caverns_and_chasms"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "l": {
+            "item": "caverns_and_chasms:azalea_slab"
+          },
+          "p": {
+            "item": "caverns_and_chasms:azalea_planks"
+          },
+          "s": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "pattern": [
+          "p p",
+          "plp",
+          "s s"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:azalea_sieve"
+        }
+      }
     }
-  },
-  "pattern": [
-    "p p",
-    "plp",
-    "s s"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:azalea_sieve"
-  }
+  ]
 }

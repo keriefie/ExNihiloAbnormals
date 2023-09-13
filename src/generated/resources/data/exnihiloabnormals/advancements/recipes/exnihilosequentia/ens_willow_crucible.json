@@ -1,34 +1,46 @@
 {
-  "parent": "minecraft:recipes/root",
-  "criteria": {
-    "has_logs": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "environmental:willow_planks"
-            ]
+  "advancements": [
+    {
+      "advancement": {
+        "parent": "minecraft:recipes/root",
+        "criteria": {
+          "has_logs": {
+            "conditions": {
+              "items": [
+                {
+                  "items": [
+                    "environmental:willow_planks"
+                  ]
+                }
+              ]
+            },
+            "trigger": "minecraft:inventory_changed"
+          },
+          "has_the_recipe": {
+            "conditions": {
+              "recipe": "exnihiloabnormals:ens_willow_crucible"
+            },
+            "trigger": "minecraft:recipe_unlocked"
           }
-        ]
+        },
+        "requirements": [
+          [
+            "has_logs",
+            "has_the_recipe"
+          ]
+        ],
+        "rewards": {
+          "recipes": [
+            "exnihiloabnormals:ens_willow_crucible"
+          ]
+        }
       },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "exnihiloabnormals:ens_willow_crucible"
-      },
-      "trigger": "minecraft:recipe_unlocked"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "environmental"
+        }
+      ]
     }
-  },
-  "requirements": [
-    [
-      "has_logs",
-      "has_the_recipe"
-    ]
-  ],
-  "rewards": {
-    "recipes": [
-      "exnihiloabnormals:ens_willow_crucible"
-    ]
-  }
+  ]
 }

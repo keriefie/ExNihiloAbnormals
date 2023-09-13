@@ -1,20 +1,33 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "-": {
-      "item": "atmospheric:kousa_slab"
-    },
-    "x": {
-      "item": "atmospheric:kousa_planks"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "-": {
+            "item": "atmospheric:kousa_slab"
+          },
+          "x": {
+            "item": "atmospheric:kousa_planks"
+          }
+        },
+        "pattern": [
+          "x x",
+          "x x",
+          "x-x"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:kousa_barrel"
+        }
+      }
     }
-  },
-  "pattern": [
-    "x x",
-    "x x",
-    "x-x"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:kousa_barrel"
-  }
+  ]
 }

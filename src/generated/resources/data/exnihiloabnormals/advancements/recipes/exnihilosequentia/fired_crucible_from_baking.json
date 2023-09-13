@@ -37,8 +37,17 @@
       },
       "conditions": [
         {
-          "type": "clayworks:config",
-          "value": "kiln"
+          "type": "forge:and",
+          "values": [
+            {
+              "type": "forge:mod_loaded",
+              "modid": "clayworks"
+            },
+            {
+              "type": "clayworks:config",
+              "value": "kiln"
+            }
+          ]
         }
       ]
     }

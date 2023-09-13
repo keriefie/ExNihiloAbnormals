@@ -1,20 +1,33 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "-": {
-      "item": "atmospheric:aspen_slab"
-    },
-    "x": {
-      "item": "atmospheric:aspen_planks"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "-": {
+            "item": "atmospheric:aspen_slab"
+          },
+          "x": {
+            "item": "atmospheric:aspen_planks"
+          }
+        },
+        "pattern": [
+          "x x",
+          "x x",
+          "x-x"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:aspen_barrel"
+        }
+      }
     }
-  },
-  "pattern": [
-    "x x",
-    "x x",
-    "x-x"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:aspen_barrel"
-  }
+  ]
 }

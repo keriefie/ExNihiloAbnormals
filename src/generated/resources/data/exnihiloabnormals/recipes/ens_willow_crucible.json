@@ -1,23 +1,36 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "c": {
-      "item": "environmental:willow_planks"
-    },
-    "l": {
-      "item": "environmental:willow_slab"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "environmental"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "c": {
+            "item": "environmental:willow_planks"
+          },
+          "l": {
+            "item": "environmental:willow_slab"
+          },
+          "s": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "pattern": [
+          "c c",
+          "clc",
+          "s s"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:willow_crucible"
+        }
+      }
     }
-  },
-  "pattern": [
-    "c c",
-    "clc",
-    "s s"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:willow_crucible"
-  }
+  ]
 }

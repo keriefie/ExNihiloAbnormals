@@ -1,23 +1,36 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "c": {
-      "item": "endergetic:poise_planks"
-    },
-    "l": {
-      "item": "endergetic:poise_slab"
-    },
-    "s": {
-      "tag": "forge:rods/wooden"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "endergetic"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "c": {
+            "item": "endergetic:poise_planks"
+          },
+          "l": {
+            "item": "endergetic:poise_slab"
+          },
+          "s": {
+            "tag": "forge:rods/wooden"
+          }
+        },
+        "pattern": [
+          "c c",
+          "clc",
+          "s s"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:poise_crucible"
+        }
+      }
     }
-  },
-  "pattern": [
-    "c c",
-    "clc",
-    "s s"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:poise_crucible"
-  }
+  ]
 }

@@ -4,13 +4,22 @@
     {
       "conditions": [
         {
-          "type": "clayworks:config",
-          "value": "kiln"
+          "type": "forge:and",
+          "values": [
+            {
+              "type": "forge:mod_loaded",
+              "modid": "clayworks"
+            },
+            {
+              "type": "clayworks:config",
+              "value": "kiln"
+            }
+          ]
         }
       ],
       "recipe": {
         "type": "clayworks:baking",
-        "cookingtime": 200,
+        "cookingtime": 100,
         "experience": 0.7,
         "ingredient": {
           "item": "exnihilosequentia:unfired_crucible"

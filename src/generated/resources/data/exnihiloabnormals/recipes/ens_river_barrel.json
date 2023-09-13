@@ -1,20 +1,33 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "group": "exnihilosequentia",
-  "key": {
-    "-": {
-      "item": "upgrade_aquatic:river_slab"
-    },
-    "x": {
-      "item": "upgrade_aquatic:river_planks"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "upgrade_aquatic"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "group": "exnihilosequentia",
+        "key": {
+          "-": {
+            "item": "upgrade_aquatic:river_slab"
+          },
+          "x": {
+            "item": "upgrade_aquatic:river_planks"
+          }
+        },
+        "pattern": [
+          "x x",
+          "x x",
+          "x-x"
+        ],
+        "result": {
+          "item": "exnihiloabnormals:river_barrel"
+        }
+      }
     }
-  },
-  "pattern": [
-    "x x",
-    "x x",
-    "x-x"
-  ],
-  "result": {
-    "item": "exnihiloabnormals:river_barrel"
-  }
+  ]
 }

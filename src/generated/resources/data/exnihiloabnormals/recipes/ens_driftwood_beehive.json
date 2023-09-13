@@ -1,19 +1,41 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "f": {
-      "item": "exnihilosequentia:beehive_frame"
-    },
-    "x": {
-      "item": "upgrade_aquatic:driftwood_planks"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:and",
+          "values": [
+            {
+              "type": "forge:mod_loaded",
+              "modid": "upgrade_aquatic"
+            },
+            {
+              "type": "forge:mod_loaded",
+              "modid": "woodworks"
+            }
+          ]
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "key": {
+          "f": {
+            "item": "exnihilosequentia:beehive_frame"
+          },
+          "x": {
+            "item": "upgrade_aquatic:driftwood_planks"
+          }
+        },
+        "pattern": [
+          "xxx",
+          "fff",
+          "xxx"
+        ],
+        "result": {
+          "item": "upgrade_aquatic:driftwood_beehive"
+        }
+      }
     }
-  },
-  "pattern": [
-    "xxx",
-    "fff",
-    "xxx"
-  ],
-  "result": {
-    "item": "upgrade_aquatic:driftwood_beehive"
-  }
+  ]
 }
