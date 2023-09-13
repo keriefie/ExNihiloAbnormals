@@ -19,10 +19,12 @@ import com.teamabnormals.woodworks.core.registry.WoodworksBlocks;
 import keriefie.exnihiloabnormals.ExNihiloAbnormals;
 import keriefie.exnihiloabnormals.common.init.ENABlocks;
 import keriefie.exnihiloabnormals.common.init.ENAItems;
+import keriefie.exnihiloabnormals.common.utility.ENAConstants;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -34,19 +36,29 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
+import net.minecraftforge.common.crafting.conditions.AndCondition;
+import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import novamachina.exnihilosequentia.common.block.BaseBlock;
+import novamachina.exnihilosequentia.common.block.BlockSieve;
+import novamachina.exnihilosequentia.common.crafting.fluiditem.FluidItemRecipeBuilder;
 import novamachina.exnihilosequentia.common.crafting.sieve.MeshWithChance;
 import novamachina.exnihilosequentia.common.crafting.sieve.SieveRecipeBuilder;
 import novamachina.exnihilosequentia.common.init.ExNihiloBlocks;
 import novamachina.exnihilosequentia.common.init.ExNihiloFluids;
 import novamachina.exnihilosequentia.common.init.ExNihiloItems;
 import novamachina.exnihilosequentia.datagen.api.datagen.AbstractRecipeGenerator;
+import org.checkerframework.checker.units.qual.A;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -57,6 +69,22 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
 
     @Nonnull
     private static final Fluid seawater = ExNihiloFluids.SEA_WATER.get();
+    @Nonnull
+    private static final ModLoadedCondition ATMOSPHERIC_LOADED = new ModLoadedCondition(ENAConstants.Mods.ATMOSPHERIC);
+    @Nonnull
+    private static final ModLoadedCondition AUTUMNITY_LOADED = new ModLoadedCondition(ENAConstants.Mods.AUTUMNITY);
+    @Nonnull
+    private static final ModLoadedCondition CAVERNS_AND_CHASMS_LOADED = new ModLoadedCondition(ENAConstants.Mods.CAVERNS_AND_CHASMS);
+    @Nonnull
+    private static final ModLoadedCondition ENDERGETIC_LOADED = new ModLoadedCondition(ENAConstants.Mods.ENDERGETIC);
+    @Nonnull
+    private static final ModLoadedCondition ENVIRONMENTAL_LOADED = new ModLoadedCondition(ENAConstants.Mods.ENVIRONMENTAL);
+    @Nonnull
+    private static final ModLoadedCondition UPGRADE_AQUATIC_LOADED = new ModLoadedCondition(ENAConstants.Mods.UPGRADE_AQUATIC);
+    @Nonnull
+    private static final ModLoadedCondition WOODWORKS_LOADED = new ModLoadedCondition(ENAConstants.Mods.WOODWORKS);
+    @Nonnull
+    private static final ModLoadedCondition CLAYWORKS_LOADED = new ModLoadedCondition(ENAConstants.Mods.CLAYWORKS);
 
     public ENARecipeGenerator(@Nonnull DataGenerator generator) {
         super(generator, ExNihiloAbnormals.MODID);
@@ -81,16 +109,71 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
         registerHeatRecipes(consumer);
     }
 
+    public static void conditionalRecipe(Consumer<FinishedRecipe> consumer, List<ICondition> conditions, RecipeBuilder recipe, ResourceLocation id) {
+        ConditionalRecipe.Builder builder = ConditionalRecipe.builder();
+        for (ICondition condition : conditions) {
+            builder.addCondition(condition);
+        }
+        builder.addRecipe(consumer1 -> recipe.save(consumer1, id)).generateAdvancement(new ResourceLocation(id.getNamespace(), "recipes/" + recipe.getResult().getItemCategory().getRecipeFolderName() + "/" + id.getPath())).build(consumer, id);
+    }
+
+    public static void conditionalRecipe(Consumer<FinishedRecipe> consumer, ICondition condition, RecipeBuilder recipe, ResourceLocation id) {
+        ConditionalRecipe.Builder builder = ConditionalRecipe.builder();
+        builder.addCondition(condition);
+        builder.addRecipe(consumer1 -> recipe.save(consumer1, id)).generateAdvancement(new ResourceLocation(id.getNamespace(), "recipes/" + recipe.getResult().getItemCategory().getRecipeFolderName() + "/" + id.getPath())).build(consumer, id);
+    }
+
     void createBarrel(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull RegistryObject<BaseBlock> barrel, @Nonnull Block block, @Nonnull Block slab) {
         createBarrel(consumer, barrel, block.asItem(), slab.asItem());
     }
 
-    void createCrucible(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull RegistryObject<BaseBlock> barrel, @Nonnull Block block, @Nonnull Block slab) {
-        createCrucible(consumer, barrel, block.asItem(), slab.asItem());
+    void createConditionalBarrel(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull RegistryObject<BaseBlock> barrel, @Nonnull Block block, @Nonnull Block slab) {
+        conditionalRecipe(consumer, condition,
+                ShapedRecipeBuilder.shaped((ItemLike)barrel.get())
+                        .pattern("x x")
+                        .pattern("x x")
+                        .pattern("x-x")
+                        .define('x', block)
+                        .define('-', slab)
+                        .group("exnihilosequentia")
+                        .unlockedBy("has_walls", has(block))
+                        .unlockedBy("has_base", has(slab)),
+                createSaveLocation(barrel.getId()));
     }
 
-    void createSieve(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull RegistryObject<BaseBlock> barrel, @Nonnull Block block, @Nonnull Block slab) {
-        createSieve(consumer, barrel, block.asItem(), slab.asItem());
+    void createCrucible(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull RegistryObject<BaseBlock> crucible, @Nonnull Block block, @Nonnull Block slab) {
+        createCrucible(consumer, crucible, block.asItem(), slab.asItem());
+    }
+
+    void createConditionalCrucible(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull RegistryObject<BaseBlock> crucible, @Nonnull Block block, @Nonnull Block slab) {
+        conditionalRecipe(consumer, condition,
+                ShapedRecipeBuilder.shaped((ItemLike)crucible.get())
+                        .pattern("c c")
+                        .pattern("clc")
+                        .pattern("s s")
+                        .define('c', block)
+                        .define('l', slab)
+                        .define('s', Tags.Items.RODS_WOODEN)
+                        .group("exnihilosequentia")
+                        .unlockedBy("has_logs", has(block)),
+                createSaveLocation(crucible.getId()));
+    }
+
+    void createSieve(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull RegistryObject<BaseBlock> sieve, @Nonnull Block block, @Nonnull Block slab) {
+        createSieve(consumer, sieve, block.asItem(), slab.asItem());
+    }
+
+    void createConditionalSieve(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull RegistryObject<BaseBlock> sieve, @Nonnull Block block, @Nonnull Block slab) {
+        conditionalRecipe(consumer, condition,
+                ShapedRecipeBuilder.shaped((BlockSieve)sieve.get())
+                        .pattern("p p")
+                        .pattern("plp")
+                        .pattern("s s")
+                        .define('p', block)
+                        .define('l', slab)
+                        .define('s', Tags.Items.RODS_WOODEN)
+                        .unlockedBy("has_plank", has(block)),
+                createSaveLocation(sieve.getId()));
     }
 
     void createBeehive(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull Block beehive_block, @Nonnull Block plank) {
@@ -107,93 +190,117 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
                 .save(consumer, replaceNamespace(createSaveLocation(beehive), ExNihiloAbnormals.MODID));
     }
 
+    void createConditionalBeehive(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull Block beehive_block, @Nonnull Block plank) {
+        @Nullable final ResourceLocation beehive = ForgeRegistries.BLOCKS.getKey(beehive_block);
+        conditionalRecipe(consumer, condition,
+                ShapedRecipeBuilder.shaped(beehive_block.asItem())
+                .pattern("xxx")
+                .pattern("fff")
+                .pattern("xxx")
+                .define('x', plank.asItem())
+                .define('f', ExNihiloItems.BEEHIVE_FRAME.get())
+                .unlockedBy(
+                        "has_frame",
+                        InventoryChangeTrigger.TriggerInstance.hasItems(ExNihiloItems.BEEHIVE_FRAME.get())),
+                replaceNamespace(createSaveLocation(beehive), ExNihiloAbnormals.MODID)
+        );
+    }
+
     ResourceLocation replaceNamespace(ResourceLocation location, String namespace) {
         return new ResourceLocation(namespace, location.getPath());
     }
 
     private void registerBarrels(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        createBarrel(consumer, ENABlocks.BARREL_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_MORADO, AtmosphericBlocks.MORADO_PLANKS.get(), AtmosphericBlocks.MORADO_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_ROSEWOOD, AtmosphericBlocks.ROSEWOOD_PLANKS.get(), AtmosphericBlocks.ROSEWOOD_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_YUCCA, AtmosphericBlocks.YUCCA_PLANKS.get(), AtmosphericBlocks.YUCCA_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_MAPLE, AutumnityBlocks.MAPLE_PLANKS.get(), AutumnityBlocks.MAPLE_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_AZALEA, CCBlocks.AZALEA_PLANKS.get(), CCBlocks.AZALEA_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_POISE, EEBlocks.POISE_PLANKS.get(), EEBlocks.POISE_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_CHERRY, EnvironmentalBlocks.CHERRY_PLANKS.get(), EnvironmentalBlocks.CHERRY_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_WILLOW, EnvironmentalBlocks.WILLOW_PLANKS.get(), EnvironmentalBlocks.WILLOW_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_WISTERIA, EnvironmentalBlocks.WISTERIA_PLANKS.get(), EnvironmentalBlocks.WISTERIA_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_DRIFTWOOD, UABlocks.DRIFTWOOD_PLANKS.get(), UABlocks.DRIFTWOOD_SLAB.get());
-        createBarrel(consumer, ENABlocks.BARREL_RIVER, UABlocks.RIVER_PLANKS.get(), UABlocks.RIVER_SLAB.get());
+        createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
+        createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
+        createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
+        createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_MORADO, AtmosphericBlocks.MORADO_PLANKS.get(), AtmosphericBlocks.MORADO_SLAB.get());
+        createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_ROSEWOOD, AtmosphericBlocks.ROSEWOOD_PLANKS.get(), AtmosphericBlocks.ROSEWOOD_SLAB.get());
+        createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_YUCCA, AtmosphericBlocks.YUCCA_PLANKS.get(), AtmosphericBlocks.YUCCA_SLAB.get());
+        createConditionalBarrel(consumer, AUTUMNITY_LOADED, ENABlocks.BARREL_MAPLE, AutumnityBlocks.MAPLE_PLANKS.get(), AutumnityBlocks.MAPLE_SLAB.get());
+        createConditionalBarrel(consumer, CAVERNS_AND_CHASMS_LOADED, ENABlocks.BARREL_AZALEA, CCBlocks.AZALEA_PLANKS.get(), CCBlocks.AZALEA_SLAB.get());
+        createConditionalBarrel(consumer, ENDERGETIC_LOADED, ENABlocks.BARREL_POISE, EEBlocks.POISE_PLANKS.get(), EEBlocks.POISE_SLAB.get());
+        createConditionalBarrel(consumer, ENVIRONMENTAL_LOADED, ENABlocks.BARREL_CHERRY, EnvironmentalBlocks.CHERRY_PLANKS.get(), EnvironmentalBlocks.CHERRY_SLAB.get());
+        createConditionalBarrel(consumer, ENVIRONMENTAL_LOADED, ENABlocks.BARREL_WILLOW, EnvironmentalBlocks.WILLOW_PLANKS.get(), EnvironmentalBlocks.WILLOW_SLAB.get());
+        createConditionalBarrel(consumer, ENVIRONMENTAL_LOADED, ENABlocks.BARREL_WISTERIA, EnvironmentalBlocks.WISTERIA_PLANKS.get(), EnvironmentalBlocks.WISTERIA_SLAB.get());
+        createConditionalBarrel(consumer, UPGRADE_AQUATIC_LOADED, ENABlocks.BARREL_DRIFTWOOD, UABlocks.DRIFTWOOD_PLANKS.get(), UABlocks.DRIFTWOOD_SLAB.get());
+        createConditionalBarrel(consumer, UPGRADE_AQUATIC_LOADED, ENABlocks.BARREL_RIVER, UABlocks.RIVER_PLANKS.get(), UABlocks.RIVER_SLAB.get());
     }
 
     private void registerCrucibles(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        createCrucible(consumer, ENABlocks.CRUCIBLE_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_MORADO, AtmosphericBlocks.MORADO_PLANKS.get(), AtmosphericBlocks.MORADO_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_ROSEWOOD, AtmosphericBlocks.ROSEWOOD_PLANKS.get(), AtmosphericBlocks.ROSEWOOD_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_YUCCA, AtmosphericBlocks.YUCCA_PLANKS.get(), AtmosphericBlocks.YUCCA_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_MAPLE, AutumnityBlocks.MAPLE_PLANKS.get(), AutumnityBlocks.MAPLE_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_AZALEA, CCBlocks.AZALEA_PLANKS.get(), CCBlocks.AZALEA_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_POISE, EEBlocks.POISE_PLANKS.get(), EEBlocks.POISE_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_CHERRY, EnvironmentalBlocks.CHERRY_PLANKS.get(), EnvironmentalBlocks.CHERRY_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_WILLOW, EnvironmentalBlocks.WILLOW_PLANKS.get(), EnvironmentalBlocks.WILLOW_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_WISTERIA, EnvironmentalBlocks.WISTERIA_PLANKS.get(), EnvironmentalBlocks.WISTERIA_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_DRIFTWOOD, UABlocks.DRIFTWOOD_PLANKS.get(), UABlocks.DRIFTWOOD_SLAB.get());
-        createCrucible(consumer, ENABlocks.CRUCIBLE_RIVER, UABlocks.RIVER_PLANKS.get(), UABlocks.RIVER_SLAB.get());
+        createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
+        createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
+        createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
+        createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_MORADO, AtmosphericBlocks.MORADO_PLANKS.get(), AtmosphericBlocks.MORADO_SLAB.get());
+        createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_ROSEWOOD, AtmosphericBlocks.ROSEWOOD_PLANKS.get(), AtmosphericBlocks.ROSEWOOD_SLAB.get());
+        createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_YUCCA, AtmosphericBlocks.YUCCA_PLANKS.get(), AtmosphericBlocks.YUCCA_SLAB.get());
+        createConditionalCrucible(consumer, AUTUMNITY_LOADED, ENABlocks.CRUCIBLE_MAPLE, AutumnityBlocks.MAPLE_PLANKS.get(), AutumnityBlocks.MAPLE_SLAB.get());
+        createConditionalCrucible(consumer, CAVERNS_AND_CHASMS_LOADED, ENABlocks.CRUCIBLE_AZALEA, CCBlocks.AZALEA_PLANKS.get(), CCBlocks.AZALEA_SLAB.get());
+        createConditionalCrucible(consumer, ENDERGETIC_LOADED, ENABlocks.CRUCIBLE_POISE, EEBlocks.POISE_PLANKS.get(), EEBlocks.POISE_SLAB.get());
+        createConditionalCrucible(consumer, ENVIRONMENTAL_LOADED, ENABlocks.CRUCIBLE_CHERRY, EnvironmentalBlocks.CHERRY_PLANKS.get(), EnvironmentalBlocks.CHERRY_SLAB.get());
+        createConditionalCrucible(consumer, ENVIRONMENTAL_LOADED, ENABlocks.CRUCIBLE_WILLOW, EnvironmentalBlocks.WILLOW_PLANKS.get(), EnvironmentalBlocks.WILLOW_SLAB.get());
+        createConditionalCrucible(consumer, ENVIRONMENTAL_LOADED, ENABlocks.CRUCIBLE_WISTERIA, EnvironmentalBlocks.WISTERIA_PLANKS.get(), EnvironmentalBlocks.WISTERIA_SLAB.get());
+        createConditionalCrucible(consumer, UPGRADE_AQUATIC_LOADED, ENABlocks.CRUCIBLE_DRIFTWOOD, UABlocks.DRIFTWOOD_PLANKS.get(), UABlocks.DRIFTWOOD_SLAB.get());
+        createConditionalCrucible(consumer, UPGRADE_AQUATIC_LOADED, ENABlocks.CRUCIBLE_RIVER, UABlocks.RIVER_PLANKS.get(), UABlocks.RIVER_SLAB.get());
     }
 
     private void registerSieves(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        createSieve(consumer, ENABlocks.SIEVE_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_MORADO, AtmosphericBlocks.MORADO_PLANKS.get(), AtmosphericBlocks.MORADO_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_ROSEWOOD, AtmosphericBlocks.ROSEWOOD_PLANKS.get(), AtmosphericBlocks.ROSEWOOD_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_YUCCA, AtmosphericBlocks.YUCCA_PLANKS.get(), AtmosphericBlocks.YUCCA_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_MAPLE, AutumnityBlocks.MAPLE_PLANKS.get(), AutumnityBlocks.MAPLE_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_AZALEA, CCBlocks.AZALEA_PLANKS.get(), CCBlocks.AZALEA_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_POISE, EEBlocks.POISE_PLANKS.get(), EEBlocks.POISE_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_CHERRY, EnvironmentalBlocks.CHERRY_PLANKS.get(), EnvironmentalBlocks.CHERRY_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_WILLOW, EnvironmentalBlocks.WILLOW_PLANKS.get(), EnvironmentalBlocks.WILLOW_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_WISTERIA, EnvironmentalBlocks.WISTERIA_PLANKS.get(), EnvironmentalBlocks.WISTERIA_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_DRIFTWOOD, UABlocks.DRIFTWOOD_PLANKS.get(), UABlocks.DRIFTWOOD_SLAB.get());
-        createSieve(consumer, ENABlocks.SIEVE_RIVER, UABlocks.RIVER_PLANKS.get(), UABlocks.RIVER_SLAB.get());
+        createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
+        createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
+        createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
+        createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_MORADO, AtmosphericBlocks.MORADO_PLANKS.get(), AtmosphericBlocks.MORADO_SLAB.get());
+        createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_ROSEWOOD, AtmosphericBlocks.ROSEWOOD_PLANKS.get(), AtmosphericBlocks.ROSEWOOD_SLAB.get());
+        createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_YUCCA, AtmosphericBlocks.YUCCA_PLANKS.get(), AtmosphericBlocks.YUCCA_SLAB.get());
+        createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_MAPLE, AutumnityBlocks.MAPLE_PLANKS.get(), AutumnityBlocks.MAPLE_SLAB.get());
+        createConditionalSieve(consumer, CAVERNS_AND_CHASMS_LOADED, ENABlocks.SIEVE_AZALEA, CCBlocks.AZALEA_PLANKS.get(), CCBlocks.AZALEA_SLAB.get());
+        createConditionalSieve(consumer, ENDERGETIC_LOADED, ENABlocks.SIEVE_POISE, EEBlocks.POISE_PLANKS.get(), EEBlocks.POISE_SLAB.get());
+        createConditionalSieve(consumer, ENVIRONMENTAL_LOADED, ENABlocks.SIEVE_CHERRY, EnvironmentalBlocks.CHERRY_PLANKS.get(), EnvironmentalBlocks.CHERRY_SLAB.get());
+        createConditionalSieve(consumer, ENVIRONMENTAL_LOADED, ENABlocks.SIEVE_WILLOW, EnvironmentalBlocks.WILLOW_PLANKS.get(), EnvironmentalBlocks.WILLOW_SLAB.get());
+        createConditionalSieve(consumer, ENVIRONMENTAL_LOADED, ENABlocks.SIEVE_WISTERIA, EnvironmentalBlocks.WISTERIA_PLANKS.get(), EnvironmentalBlocks.WISTERIA_SLAB.get());
+        createConditionalSieve(consumer, UPGRADE_AQUATIC_LOADED, ENABlocks.SIEVE_DRIFTWOOD, UABlocks.DRIFTWOOD_PLANKS.get(), UABlocks.DRIFTWOOD_SLAB.get());
+        createConditionalSieve(consumer, UPGRADE_AQUATIC_LOADED, ENABlocks.SIEVE_RIVER, UABlocks.RIVER_PLANKS.get(), UABlocks.RIVER_SLAB.get());
+    }
+
+    private static AndCondition and(ICondition a, ICondition b) {
+        return new AndCondition(a, b);
     }
 
     private void registerBeehives(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        createBeehive(consumer, WoodworksBlocks.SPRUCE_BEEHIVE.get(), Blocks.SPRUCE_PLANKS);
-        createBeehive(consumer, WoodworksBlocks.BIRCH_BEEHIVE.get(), Blocks.BIRCH_PLANKS);
-        createBeehive(consumer, WoodworksBlocks.ACACIA_BEEHIVE.get(), Blocks.ACACIA_PLANKS);
-        createBeehive(consumer, WoodworksBlocks.JUNGLE_BEEHIVE.get(), Blocks.JUNGLE_PLANKS);
-        createBeehive(consumer, WoodworksBlocks.DARK_OAK_BEEHIVE.get(), Blocks.DARK_OAK_PLANKS);
-        createBeehive(consumer, WoodworksBlocks.MANGROVE_BEEHIVE.get(), Blocks.MANGROVE_PLANKS);
-        createBeehive(consumer, WoodworksBlocks.CRIMSON_BEEHIVE.get(), Blocks.CRIMSON_PLANKS);
-        createBeehive(consumer, WoodworksBlocks.WARPED_BEEHIVE.get(), Blocks.WARPED_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.SPRUCE_BEEHIVE.get(), Blocks.SPRUCE_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.BIRCH_BEEHIVE.get(), Blocks.BIRCH_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.ACACIA_BEEHIVE.get(), Blocks.ACACIA_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.JUNGLE_BEEHIVE.get(), Blocks.JUNGLE_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.DARK_OAK_BEEHIVE.get(), Blocks.DARK_OAK_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.MANGROVE_BEEHIVE.get(), Blocks.MANGROVE_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.CRIMSON_BEEHIVE.get(), Blocks.CRIMSON_PLANKS);
+        createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.WARPED_BEEHIVE.get(), Blocks.WARPED_PLANKS);
 
-        createBeehive(consumer, AtmosphericBlocks.ASPEN_BEEHIVE.get(), AtmosphericBlocks.ASPEN_PLANKS.get());
-        createBeehive(consumer, AtmosphericBlocks.GRIMWOOD_BEEHIVE.get(), AtmosphericBlocks.GRIMWOOD_PLANKS.get());
-        createBeehive(consumer, AtmosphericBlocks.KOUSA_BEEHIVE.get(), AtmosphericBlocks.KOUSA_PLANKS.get());
-        createBeehive(consumer, AtmosphericBlocks.MORADO_BEEHIVE.get(), AtmosphericBlocks.MORADO_PLANKS.get());
-        createBeehive(consumer, AtmosphericBlocks.ROSEWOOD_BEEHIVE.get(), AtmosphericBlocks.ROSEWOOD_PLANKS.get());
-        createBeehive(consumer, AtmosphericBlocks.YUCCA_BEEHIVE.get(), AtmosphericBlocks.YUCCA_PLANKS.get());
-        createBeehive(consumer, AutumnityBlocks.MAPLE_BEEHIVE.get(), AutumnityBlocks.MAPLE_PLANKS.get());
-        createBeehive(consumer, CCBlocks.AZALEA_BEEHIVE.get(), CCBlocks.AZALEA_PLANKS.get());
-        createBeehive(consumer, EEBlocks.POISE_BEEHIVE.get(), EEBlocks.POISE_PLANKS.get());
-        createBeehive(consumer, EnvironmentalBlocks.CHERRY_BEEHIVE.get(), EnvironmentalBlocks.CHERRY_PLANKS.get());
-        createBeehive(consumer, EnvironmentalBlocks.WILLOW_BEEHIVE.get(), EnvironmentalBlocks.WILLOW_PLANKS.get());
-        createBeehive(consumer, EnvironmentalBlocks.WISTERIA_BEEHIVE.get(), EnvironmentalBlocks.WISTERIA_PLANKS.get());
-        createBeehive(consumer, UABlocks.DRIFTWOOD_BEEHIVE.get(), UABlocks.DRIFTWOOD_PLANKS.get());
-        createBeehive(consumer, UABlocks.RIVER_BEEHIVE.get(), UABlocks.RIVER_PLANKS.get());
+        createConditionalBeehive(consumer, and(ATMOSPHERIC_LOADED, WOODWORKS_LOADED), AtmosphericBlocks.ASPEN_BEEHIVE.get(), AtmosphericBlocks.ASPEN_PLANKS.get());
+        createConditionalBeehive(consumer, and(ATMOSPHERIC_LOADED, WOODWORKS_LOADED), AtmosphericBlocks.GRIMWOOD_BEEHIVE.get(), AtmosphericBlocks.GRIMWOOD_PLANKS.get());
+        createConditionalBeehive(consumer, and(ATMOSPHERIC_LOADED, WOODWORKS_LOADED), AtmosphericBlocks.KOUSA_BEEHIVE.get(), AtmosphericBlocks.KOUSA_PLANKS.get());
+        createConditionalBeehive(consumer, and(ATMOSPHERIC_LOADED, WOODWORKS_LOADED), AtmosphericBlocks.MORADO_BEEHIVE.get(), AtmosphericBlocks.MORADO_PLANKS.get());
+        createConditionalBeehive(consumer, and(ATMOSPHERIC_LOADED, WOODWORKS_LOADED), AtmosphericBlocks.ROSEWOOD_BEEHIVE.get(), AtmosphericBlocks.ROSEWOOD_PLANKS.get());
+        createConditionalBeehive(consumer, and(ATMOSPHERIC_LOADED, WOODWORKS_LOADED), AtmosphericBlocks.YUCCA_BEEHIVE.get(), AtmosphericBlocks.YUCCA_PLANKS.get());
+        createConditionalBeehive(consumer, and(AUTUMNITY_LOADED, WOODWORKS_LOADED), AutumnityBlocks.MAPLE_BEEHIVE.get(), AutumnityBlocks.MAPLE_PLANKS.get());
+        createConditionalBeehive(consumer, and(CAVERNS_AND_CHASMS_LOADED, WOODWORKS_LOADED), CCBlocks.AZALEA_BEEHIVE.get(), CCBlocks.AZALEA_PLANKS.get());
+        createConditionalBeehive(consumer, and(ENDERGETIC_LOADED, WOODWORKS_LOADED), EEBlocks.POISE_BEEHIVE.get(), EEBlocks.POISE_PLANKS.get());
+        createConditionalBeehive(consumer, and(ENVIRONMENTAL_LOADED, WOODWORKS_LOADED), EnvironmentalBlocks.CHERRY_BEEHIVE.get(), EnvironmentalBlocks.CHERRY_PLANKS.get());
+        createConditionalBeehive(consumer, and(ENVIRONMENTAL_LOADED, WOODWORKS_LOADED), EnvironmentalBlocks.WILLOW_BEEHIVE.get(), EnvironmentalBlocks.WILLOW_PLANKS.get());
+        createConditionalBeehive(consumer, and(ENVIRONMENTAL_LOADED, WOODWORKS_LOADED), EnvironmentalBlocks.WISTERIA_BEEHIVE.get(), EnvironmentalBlocks.WISTERIA_PLANKS.get());
+        createConditionalBeehive(consumer, and(UPGRADE_AQUATIC_LOADED, WOODWORKS_LOADED), UABlocks.DRIFTWOOD_BEEHIVE.get(), UABlocks.DRIFTWOOD_PLANKS.get());
+        createConditionalBeehive(consumer, and(UPGRADE_AQUATIC_LOADED, WOODWORKS_LOADED), UABlocks.RIVER_BEEHIVE.get(), UABlocks.RIVER_PLANKS.get());
     }
 
     protected static void baking(Consumer<FinishedRecipe> consumer, ItemLike ingredient, ItemLike result, float experience, int cookingTime) {
-        conditionalRecipe(consumer, KILN_CONFIG, SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, experience, cookingTime, ClayworksRecipes.ClayworksRecipeSerializers.BAKING.get()).unlockedBy(getHasName(ingredient), has(ingredient)), new ResourceLocation(ExNihiloAbnormals.MODID, getItemName(result) + "_from_baking"));
+        conditionalRecipe(consumer, and(CLAYWORKS_LOADED, KILN_CONFIG), SimpleCookingRecipeBuilder.cooking(Ingredient.of(ingredient), result, experience, cookingTime, ClayworksRecipes.ClayworksRecipeSerializers.BAKING.get()).unlockedBy(getHasName(ingredient), has(ingredient)), new ResourceLocation(ExNihiloAbnormals.MODID, getItemName(result) + "_from_baking"));
     }
 
     private void registerKilnRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
         baking(consumer, ExNihiloBlocks.CRUCIBLE_UNFIRED.get(), ExNihiloBlocks.CRUCIBLE_FIRED.get(), 0.7F, 100);
+    }
+
+    protected void createFluidItemRecipes(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull Fluid fluidInput, @Nonnull Item itemInput, @Nonnull Block blockOutput, @Nonnull String id) {
+        FluidItemRecipeBuilder.builder().fluidInBarrel(fluidInput).input(itemInput).result(blockOutput).build(consumer, this.fluidItemLoc(id));
     }
 
     private void registerFluidItemRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
