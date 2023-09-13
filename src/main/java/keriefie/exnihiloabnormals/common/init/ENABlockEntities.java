@@ -27,8 +27,11 @@ public class ENABlockEntities {
     @Nonnull
     public static final RegistryObject<BlockEntityType<? extends SieveEntity>> SIEVE_ENTITY;
 
-    static {}
-    private ENABlockEntities() {}
+    static {
+    }
+
+    private ENABlockEntities() {
+    }
 
     static {
         BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ExNihiloAbnormals.MODID);
@@ -36,24 +39,24 @@ public class ENABlockEntities {
                 BLOCK_ENTITIES.register(
                         ENAConstants.Blocks.BARRELS,
                         () -> BlockEntityType.Builder.of(
-                                        ENAWoodBarrelEntity::new,
-                                        new Block[]{
-                                                ENABlocks.BARREL_ASPEN.get(),
-                                                ENABlocks.BARREL_AZALEA.get(),
-                                                ENABlocks.BARREL_CHERRY.get(),
-                                                ENABlocks.BARREL_DRIFTWOOD.get(),
-                                                ENABlocks.BARREL_GRIMWOOD.get(),
-                                                ENABlocks.BARREL_KOUSA.get(),
-                                                ENABlocks.BARREL_MAPLE.get(),
-                                                ENABlocks.BARREL_MORADO.get(),
-                                                ENABlocks.BARREL_POISE.get(),
-                                                ENABlocks.BARREL_RIVER.get(),
-                                                ENABlocks.BARREL_ROSEWOOD.get(),
-                                                ENABlocks.BARREL_WILLOW.get(),
-                                                ENABlocks.BARREL_WISTERIA.get(),
-                                                ENABlocks.BARREL_YUCCA.get()
-                                        }
-                                ).build(null));
+                                ENAWoodBarrelEntity::new,
+                                new Block[]{
+                                        ENABlocks.BARREL_ASPEN.get(),
+                                        ENABlocks.BARREL_AZALEA.get(),
+                                        ENABlocks.BARREL_CHERRY.get(),
+                                        ENABlocks.BARREL_DRIFTWOOD.get(),
+                                        ENABlocks.BARREL_GRIMWOOD.get(),
+                                        ENABlocks.BARREL_KOUSA.get(),
+                                        ENABlocks.BARREL_MAPLE.get(),
+                                        ENABlocks.BARREL_MORADO.get(),
+                                        ENABlocks.BARREL_POISE.get(),
+                                        ENABlocks.BARREL_RIVER.get(),
+                                        ENABlocks.BARREL_ROSEWOOD.get(),
+                                        ENABlocks.BARREL_WILLOW.get(),
+                                        ENABlocks.BARREL_WISTERIA.get(),
+                                        ENABlocks.BARREL_YUCCA.get()
+                                }
+                        ).build(null));
         WOODEN_CRUCIBLE_ENTITY =
                 BLOCK_ENTITIES.register(
                         ENAConstants.Blocks.CRUCIBLES,
@@ -61,20 +64,20 @@ public class ENABlockEntities {
                                 BlockEntityType.Builder.of(
                                         ENAWoodCrucibleEntity::new,
                                         new Block[]{
-                                            ENABlocks.CRUCIBLE_ASPEN.get(),
-                                            ENABlocks.CRUCIBLE_AZALEA.get(),
-                                            ENABlocks.CRUCIBLE_CHERRY.get(),
-                                            ENABlocks.CRUCIBLE_DRIFTWOOD.get(),
-                                            ENABlocks.CRUCIBLE_GRIMWOOD.get(),
-                                            ENABlocks.CRUCIBLE_KOUSA.get(),
-                                            ENABlocks.CRUCIBLE_MAPLE.get(),
-                                            ENABlocks.CRUCIBLE_MORADO.get(),
-                                            ENABlocks.CRUCIBLE_POISE.get(),
-                                            ENABlocks.CRUCIBLE_RIVER.get(),
-                                            ENABlocks.CRUCIBLE_ROSEWOOD.get(),
-                                            ENABlocks.CRUCIBLE_WILLOW.get(),
-                                            ENABlocks.CRUCIBLE_WISTERIA.get(),
-                                            ENABlocks.CRUCIBLE_YUCCA.get()
+                                                ENABlocks.CRUCIBLE_ASPEN.get(),
+                                                ENABlocks.CRUCIBLE_AZALEA.get(),
+                                                ENABlocks.CRUCIBLE_CHERRY.get(),
+                                                ENABlocks.CRUCIBLE_DRIFTWOOD.get(),
+                                                ENABlocks.CRUCIBLE_GRIMWOOD.get(),
+                                                ENABlocks.CRUCIBLE_KOUSA.get(),
+                                                ENABlocks.CRUCIBLE_MAPLE.get(),
+                                                ENABlocks.CRUCIBLE_MORADO.get(),
+                                                ENABlocks.CRUCIBLE_POISE.get(),
+                                                ENABlocks.CRUCIBLE_RIVER.get(),
+                                                ENABlocks.CRUCIBLE_ROSEWOOD.get(),
+                                                ENABlocks.CRUCIBLE_WILLOW.get(),
+                                                ENABlocks.CRUCIBLE_WISTERIA.get(),
+                                                ENABlocks.CRUCIBLE_YUCCA.get()
                                         }
                                 ).build(null));
         SIEVE_ENTITY =

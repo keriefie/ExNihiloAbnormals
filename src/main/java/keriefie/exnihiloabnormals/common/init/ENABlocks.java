@@ -198,7 +198,8 @@ public class ENABlocks {
     public static final RegistryObject<BaseBlock> SIEVE_YUCCA =
             BLOCKS.register(ENAConstants.Blocks.YUCCA_SIEVE, ENAWoodSieveBlock::new);
 
-    private ENABlocks() {}
+    private ENABlocks() {
+    }
 
     public static void init(@Nonnull final IEventBus bus) {
         BLOCKS.register(bus);

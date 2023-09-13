@@ -84,6 +84,7 @@ public class ENABlockStateGenerator extends AbstractBlockStateGenerator {
                 enaLoc("block/river_barrel"),
                 modLoc(Mods.UPGRADE_AQUATIC, "block/river_planks"));
     }
+
     private void registerCrucibles() {
         createCrucible(
                 ENABlocks.CRUCIBLE_ASPEN.get(),
@@ -142,7 +143,8 @@ public class ENABlockStateGenerator extends AbstractBlockStateGenerator {
                 enaLoc("block/river_crucible"),
                 modLoc(Mods.UPGRADE_AQUATIC, "block/river_planks"));
     }
-    private void registerSieves () {
+
+    private void registerSieves() {
         createSieve(
                 ENABlocks.SIEVE_ASPEN.get(),
                 enaLoc("block/aspen_sieve"),
@@ -201,7 +203,7 @@ public class ENABlockStateGenerator extends AbstractBlockStateGenerator {
                 modLoc(Mods.UPGRADE_AQUATIC, "block/river_planks"));
     }
 
-    private void registerSimpleBlocks () {
+    private void registerSimpleBlocks() {
         basicBlock(ENABlocks.CRUSHED_IVORY_TRAVERTINE.get());
         basicBlock(ENABlocks.CRUSHED_PEACH_TRAVERTINE.get());
         basicBlock(ENABlocks.CRUSHED_PERSIMMON_TRAVERTINE.get());
@@ -213,7 +215,7 @@ public class ENABlockStateGenerator extends AbstractBlockStateGenerator {
     }
 
     protected ResourceLocation modLoc(String mod, String string) {
-         return new ResourceLocation(mod, string);
+        return new ResourceLocation(mod, string);
 //        return vanillaLoc("block/oak_planks");
     }
 }

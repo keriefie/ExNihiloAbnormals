@@ -6,8 +6,6 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import novamachina.exnihilosequentia.common.blockentity.barrel.mode.BarrelModeRegistry;
-import novamachina.exnihilosequentia.common.network.PacketHandler;
 
 import javax.annotation.Nonnull;
 

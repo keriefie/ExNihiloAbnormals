@@ -1,18 +1,15 @@
 package keriefie.exnihiloabnormals.common.item;
 
 import net.minecraft.core.Direction;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import novamachina.exnihilosequentia.common.item.ResourceItem;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.stream.Stream;
 
 public class ENAResourceItem extends ResourceItem {
     @Nonnull
@@ -64,7 +61,8 @@ public class ENAResourceItem extends ResourceItem {
                 if (!context.getPlayer().isCreative()) {
                     context.getItemInHand().shrink(1);
                 }
-                if (this.getTriggerBlock3() != null && this.getReplaceBlock3() != null) {;
+                if (this.getTriggerBlock3() != null && this.getReplaceBlock3() != null) {
+                    ;
                     Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
                     replaceBlock = this.getReplaceBlock2().setValue(BlockStateProperties.AXIS, axis);
                 } else {

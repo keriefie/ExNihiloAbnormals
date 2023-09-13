@@ -1,14 +1,13 @@
 package keriefie.exnihiloabnormals.common.utility;
 
-import cpw.mods.modlauncher.api.ITransformationService;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ENAConstants {
-    private ENAConstants() {}
+    private ENAConstants() {
+    }
 
     public static class Mods {
         public static final String JEI = "jei";
@@ -55,7 +54,6 @@ public class ENAConstants {
 
         public static final String CRUSTOSE_SPORE = createResourceName("crustose_spores");
         public static final String POISMOSS_SPORE = createResourceName("poismoss_spores");
-
 
 
         private static String createResourceName(final String name) {
@@ -121,7 +119,8 @@ public class ENAConstants {
         public static final String YUCCA_SIEVE = addBlockToList("yucca_sieve");
 
 
-        private Blocks() {}
+        private Blocks() {
+        }
 
         private static String addBlockToList(final String name) {
             blocksList.add(name);

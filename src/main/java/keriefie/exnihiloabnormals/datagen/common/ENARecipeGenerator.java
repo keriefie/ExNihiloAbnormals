@@ -7,7 +7,6 @@ import com.teamabnormals.autumnity.core.registry.AutumnityItems;
 import com.teamabnormals.berry_good.core.registry.BGItems;
 import com.teamabnormals.caverns_and_chasms.core.registry.CCBlocks;
 import com.teamabnormals.caverns_and_chasms.core.registry.CCItems;
-import com.teamabnormals.clayworks.common.item.crafting.BakingRecipe;
 import com.teamabnormals.clayworks.core.registry.ClayworksRecipes;
 import com.teamabnormals.endergetic.core.registry.EEBlocks;
 import com.teamabnormals.environmental.core.registry.EnvironmentalBlocks;
@@ -29,7 +28,6 @@ import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -57,7 +55,9 @@ import static com.teamabnormals.clayworks.core.data.server.ClayworksRecipeProvid
 
 public class ENARecipeGenerator extends AbstractRecipeGenerator {
 
-    @Nonnull private static final Fluid seawater = ExNihiloFluids.SEA_WATER.get();
+    @Nonnull
+    private static final Fluid seawater = ExNihiloFluids.SEA_WATER.get();
+
     public ENARecipeGenerator(@Nonnull DataGenerator generator) {
         super(generator, ExNihiloAbnormals.MODID);
     }
@@ -755,8 +755,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
         getAbnormalsLeavesSaplings()
                 .forEach(
                         (input, drop) -> {
-                            @Nullable
-                            final ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(input);
+                            @Nullable final ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(input);
                             if (resourceLocation != null) {
                                 SieveRecipeBuilder.builder()
                                         .input(Ingredient.of(input))

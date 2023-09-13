@@ -24,7 +24,7 @@ public class ENALangGenerator extends AbstractLangGenerator {
 
     @Override
     protected void addBlockAutoName(String block) {
-        String BLOCK_LANG = "block."+ExNihiloAbnormals.MODID+".";
+        String BLOCK_LANG = "block." + ExNihiloAbnormals.MODID + ".";
         this.add(BLOCK_LANG + block, this.properNaming(block));
     }
 

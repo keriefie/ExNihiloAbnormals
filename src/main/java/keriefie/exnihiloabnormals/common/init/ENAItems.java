@@ -15,8 +15,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import novamachina.exnihilosequentia.common.block.BaseBlock;
-import novamachina.exnihilosequentia.common.block.barrels.WoodBarrelBlock;
 import novamachina.exnihilosequentia.common.init.ExNihiloInitialization;
 import novamachina.exnihilosequentia.common.item.ResourceItem;
 

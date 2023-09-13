@@ -10,14 +10,14 @@ import net.minecraft.data.DataGenerator;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import novamachina.exnihilosequentia.common.utility.ExNihiloConstants;
 
 import javax.annotation.Nonnull;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ENADataGenerators {
 
-    private ENADataGenerators() {}
+    private ENADataGenerators() {
+    }
 
     @SubscribeEvent
     public static void gatherData(@Nonnull final GatherDataEvent event) {

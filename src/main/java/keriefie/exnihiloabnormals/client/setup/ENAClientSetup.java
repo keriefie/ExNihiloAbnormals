@@ -19,7 +19,8 @@ import javax.annotation.Nonnull;
         value = Dist.CLIENT,
         bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ENAClientSetup {
-    private ENAClientSetup() {}
+    private ENAClientSetup() {
+    }
 
     public static void init(@Nonnull final FMLClientSetupEvent event) {
         registerBarrelRenderLayer();
