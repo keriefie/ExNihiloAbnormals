@@ -71,6 +71,12 @@ Abnormals addon for Ex Nihilo Sequentia.
     ordering="AFTER"
     side="BOTH"
 [[dependencies.exnihiloabnormals]]
+    modId="jei"
+    mandatory=false
+    versionRange="[11.6.0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.exnihiloabnormals]]
     modId="upgrade_aquatic"
     mandatory=false
     versionRange="[5.0.0,)"
@@ -116,5 +122,23 @@ Abnormals addon for Ex Nihilo Sequentia.
     modId="endergetic"
     mandatory=false
     versionRange="[4.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.exnihiloabnormals]]
+    modId="berry_good"
+    mandatory=false
+    versionRange="[6.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.exnihiloabnormals]]
+    modId="clayworks"
+    mandatory=false
+    versionRange="[2.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.exnihiloabnormals]]
+    modId="woodworks"
+    mandatory=false
+    versionRange="[2.2.0,)"
     ordering="AFTER"
     side="BOTH"
