@@ -421,6 +421,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
         createCompostRecipe(consumer, AutumnityBlocks.CUPRIC_JACK_O_LANTERN.get(), 1000 / 6, "cupric_jack_o_lantern");
         createCompostRecipe(consumer, AutumnityBlocks.ENDER_JACK_O_LANTERN.get(), 1000 / 6, "ender_jack_o_lantern");
         createCompostRecipe(consumer, AutumnityBlocks.LARGE_PUMPKIN_SLICE.get(), 1000 / 6, "large_pumpkin_slice");
+        createCompostRecipe(consumer, AutumnityBlocks.CARVED_LARGE_PUMPKIN_SLICE.get(), 1000 / 6, "carved_large_pumpkin_slice");
         createCompostRecipe(consumer, AutumnityBlocks.LARGE_JACK_O_LANTERN_SLICE.get(), 1000 / 6, "large_jack_o_lantern_slice");
         createCompostRecipe(consumer, AutumnityBlocks.LARGE_REDSTONE_JACK_O_LANTERN_SLICE.get(), 1000 / 6, "large_redstone_jack_o_lantern_slice");
         createCompostRecipe(consumer, AutumnityBlocks.LARGE_SOUL_JACK_O_LANTERN_SLICE.get(), 1000 / 6, "large_soul_jack_o_lantern_slice");
@@ -428,6 +429,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
         createCompostRecipe(consumer, AutumnityBlocks.LARGE_ENDER_JACK_O_LANTERN_SLICE.get(), 1000 / 6, "large_ender_jack_o_lantern_slice");
         createCompostRecipe(consumer, AutumnityBlocks.TURKEY.get(), 1000, "turkey");
         createCompostRecipe(consumer, AutumnityBlocks.COOKED_TURKEY.get(), 1000, "cooked_turkey");
+        createCompostRecipe(consumer, AutumnityItems.PUMPKIN_BREAD.get(), 160, "pumpkin_bread");
 
         createCompostRecipe(consumer, EnvironmentalBlocks.GRASS_THATCH.get(), 100, "grass_thatch");
         createCompostRecipe(consumer, EnvironmentalBlocks.GRASS_THATCH_SLAB.get(), 50, "grass_thatch_slab");
