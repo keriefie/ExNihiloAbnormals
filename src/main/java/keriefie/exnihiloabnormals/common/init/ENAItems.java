@@ -3,6 +3,7 @@ package keriefie.exnihiloabnormals.common.init;
 import keriefie.exnihiloabnormals.ExNihiloAbnormals;
 import keriefie.exnihiloabnormals.common.item.ENAResourceItem;
 import keriefie.exnihiloabnormals.common.utility.ENAConstants;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -81,27 +82,25 @@ public class ENAItems {
                     ENAConstants.Items.STAR_CORAL_LARVA,
                     () -> new ResourceItem(ENAConstants.Items.STAR_CORAL_LARVA));
 
-    static boolean atmosphericPresent = ModList.get().isLoaded(ENAConstants.Mods.ATMOSPHERIC);
-    static boolean endergeticPresent = ModList.get().isLoaded(ENAConstants.Mods.ENDERGETIC);
-    static Block crustose = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.CRUSTOSE);
-    static Block aspen_log = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.ASPEN_LOG);
-    static Block crustose_log = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.CRUSTOSE_LOG);
-    static Block aspen_wood = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.ASPEN_WOOD);
-    static Block crustose_wood = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.CRUSTOSE_WOOD);
-    static Block poismoss = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.POISMOSS);
-    static Block eumus = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.EUMUS);
-    static Block eumus_poismoss = ForgeRegistries.BLOCKS.getValue(ENAConstants.ModBlocks.EUMUS_POISMOSS);
+    static ResourceLocation crustose = ENAConstants.ModBlocks.CRUSTOSE;
+    static ResourceLocation aspen_log = ENAConstants.ModBlocks.ASPEN_LOG;
+    static ResourceLocation crustose_log = ENAConstants.ModBlocks.CRUSTOSE_LOG;
+    static ResourceLocation aspen_wood = ENAConstants.ModBlocks.ASPEN_WOOD;
+    static ResourceLocation crustose_wood = ENAConstants.ModBlocks.CRUSTOSE_WOOD;
+    static ResourceLocation poismoss = ENAConstants.ModBlocks.POISMOSS;
+    static ResourceLocation eumus = ENAConstants.ModBlocks.EUMUS;
+    static ResourceLocation eumus_poismoss = ENAConstants.ModBlocks.EUMUS_POISMOSS;
 
     public static final RegistryObject<ResourceItem> CRUSTOSE_SPORE =
             ITEMS.register(
                     ENAConstants.Items.CRUSTOSE_SPORE,
                     () ->
                             new ENAResourceItem(
-
                                     ENAConstants.Items.CRUSTOSE_SPORE,
-                                    Blocks.DIRT, atmosphericPresent ? crustose : null,
-                                    atmosphericPresent ? aspen_log : null, atmosphericPresent ? crustose_log : null,
-                                    atmosphericPresent ? aspen_wood : null, atmosphericPresent ? crustose_wood : null
+                                    ENAConstants.Mods.ATMOSPHERIC,
+                                    Blocks.DIRT, crustose,
+                                    aspen_log, crustose_log,
+                                    aspen_wood, crustose_wood
                             )
             );
     public static final RegistryObject<ResourceItem> POISMOSS_SPORE =
@@ -110,8 +109,9 @@ public class ENAItems {
                     () ->
                             new ENAResourceItem(
                                     ENAConstants.Items.POISMOSS_SPORE,
-                                    Blocks.END_STONE, endergeticPresent ? poismoss : null,
-                                    endergeticPresent ? eumus : null, endergeticPresent ? eumus_poismoss : null
+                                    ENAConstants.Mods.ENDERGETIC,
+                                    Blocks.END_STONE, poismoss,
+                                    eumus, eumus_poismoss
                             )
             );
 
