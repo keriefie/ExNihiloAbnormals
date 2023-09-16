@@ -48,6 +48,10 @@ public class ENAItems {
             ITEMS.register(
                     ENAConstants.Items.ELDER_PRISMARINE_CORAL_LARVA,
                     () -> new ResourceItem(ENAConstants.Items.ELDER_PRISMARINE_CORAL_LARVA));
+    public static final RegistryObject<ResourceItem> FINGER_CORAL_LARVA =
+            ITEMS.register(
+                    ENAConstants.Items.FINGER_CORAL_LARVA,
+                    () -> new ResourceItem(ENAConstants.Items.FINGER_CORAL_LARVA));
     public static final RegistryObject<ResourceItem> MOSS_CORAL_LARVA =
             ITEMS.register(
                     ENAConstants.Items.MOSS_CORAL_LARVA,

@@ -56,7 +56,6 @@ public class ENAFluidItemRecipeBuilder extends ExNihiloFinishedRecipe<ENAFluidIt
 
     @Nonnull
     public ENAFluidItemRecipeBuilder result(@Nonnull ItemLike output) {
-        // Stupid but not my fault that this RecipeBuilder sucks
         this.result = output.asItem();
         return (ENAFluidItemRecipeBuilder)this.addResult(output);
     }
@@ -75,7 +74,7 @@ public class ENAFluidItemRecipeBuilder extends ExNihiloFinishedRecipe<ENAFluidIt
 
     @Override
     public Item getResult() {
-        return result;
+        return this.result;
     }
 
     @Override

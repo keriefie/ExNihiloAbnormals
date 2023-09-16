@@ -1,7 +1,20 @@
 {
-  "type": "exnihilosequentia:compost",
-  "amount": 100,
-  "input": {
-    "item": "atmospheric:yucca_fruit"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:compost",
+        "amount": 100,
+        "input": {
+          "item": "atmospheric:yucca_fruit"
+        }
+      }
+    }
+  ]
 }

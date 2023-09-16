@@ -1,11 +1,24 @@
 {
-  "type": "exnihilosequentia:crucible",
-  "amount": 250,
-  "crucibleType": "fired",
-  "fluidResult": {
-    "fluid": "minecraft:lava"
-  },
-  "input": {
-    "item": "atmospheric:ivory_travertine"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:crucible",
+        "amount": 250,
+        "crucibleType": "fired",
+        "fluidResult": {
+          "fluid": "minecraft:lava"
+        },
+        "input": {
+          "item": "atmospheric:ivory_travertine"
+        }
+      }
+    }
+  ]
 }

@@ -1,8 +1,21 @@
 {
-  "type": "exnihilosequentia:heat",
-  "amount": 5,
-  "block": "caverns_and_chasms:cupric_brazier",
-  "state": {
-    "lit": "true"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "caverns_and_chasms"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:heat",
+        "amount": 5,
+        "block": "caverns_and_chasms:cupric_brazier",
+        "state": {
+          "lit": "true"
+        }
+      }
+    }
+  ]
 }

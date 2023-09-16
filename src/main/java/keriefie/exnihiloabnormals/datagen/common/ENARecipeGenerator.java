@@ -1,5 +1,6 @@
 package keriefie.exnihiloabnormals.datagen.common;
 
+import com.mojang.logging.LogUtils;
 import com.teamabnormals.atmospheric.core.registry.AtmosphericBlocks;
 import com.teamabnormals.atmospheric.core.registry.AtmosphericItems;
 import com.teamabnormals.autumnity.core.registry.AutumnityBlocks;
@@ -20,8 +21,7 @@ import keriefie.exnihiloabnormals.ExNihiloAbnormals;
 import keriefie.exnihiloabnormals.common.init.ENABlocks;
 import keriefie.exnihiloabnormals.common.init.ENAItems;
 import keriefie.exnihiloabnormals.common.utility.ENAConstants;
-import keriefie.exnihiloabnormals.datagen.common.recipes.ENACompostRecipeBuilder;
-import keriefie.exnihiloabnormals.datagen.common.recipes.ENAFluidItemRecipeBuilder;
+import keriefie.exnihiloabnormals.datagen.common.recipes.*;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
@@ -33,11 +33,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.UpgradeRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.AndCondition;
@@ -48,13 +50,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import novamachina.exnihilosequentia.common.block.BaseBlock;
 import novamachina.exnihilosequentia.common.block.BlockSieve;
+import novamachina.exnihilosequentia.common.blockentity.crucible.CrucibleTypeEnum;
 import novamachina.exnihilosequentia.common.crafting.compost.CompostRecipeBuilder;
+import novamachina.exnihilosequentia.common.crafting.crucible.CrucibleRecipeBuilder;
 import novamachina.exnihilosequentia.common.crafting.fluiditem.FluidItemRecipeBuilder;
+import novamachina.exnihilosequentia.common.crafting.hammer.HammerRecipeBuilder;
+import novamachina.exnihilosequentia.common.crafting.heat.HeatRecipeBuilder;
 import novamachina.exnihilosequentia.common.crafting.sieve.MeshWithChance;
 import novamachina.exnihilosequentia.common.crafting.sieve.SieveRecipeBuilder;
 import novamachina.exnihilosequentia.common.init.ExNihiloBlocks;
 import novamachina.exnihilosequentia.common.init.ExNihiloFluids;
 import novamachina.exnihilosequentia.common.init.ExNihiloItems;
+import novamachina.exnihilosequentia.common.item.mesh.MeshType;
+import novamachina.exnihilosequentia.common.utility.ExNihiloLogger;
 import novamachina.exnihilosequentia.datagen.api.datagen.AbstractRecipeGenerator;
 import org.checkerframework.checker.units.qual.A;
 
@@ -71,11 +79,16 @@ import static com.teamabnormals.clayworks.core.data.server.ClayworksRecipeProvid
 public class ENARecipeGenerator extends AbstractRecipeGenerator {
 
     @Nonnull
+    private static final ExNihiloLogger logger = new ExNihiloLogger(LogUtils.getLogger());
+
+    @Nonnull
     private static final Fluid seawater = ExNihiloFluids.SEA_WATER.get();
     @Nonnull
     private static final ModLoadedCondition ATMOSPHERIC_LOADED = new ModLoadedCondition(ENAConstants.Mods.ATMOSPHERIC);
     @Nonnull
     private static final ModLoadedCondition AUTUMNITY_LOADED = new ModLoadedCondition(ENAConstants.Mods.AUTUMNITY);
+    @Nonnull
+    private static final ModLoadedCondition BERRY_GOOD_LOADED = new ModLoadedCondition(ENAConstants.Mods.BERRY_GOOD);
     @Nonnull
     private static final ModLoadedCondition CAVERNS_AND_CHASMS_LOADED = new ModLoadedCondition(ENAConstants.Mods.CAVERNS_AND_CHASMS);
     @Nonnull
@@ -97,6 +110,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
 
     @Override
     protected void buildCraftingRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("buildCraftingRecipes");
         registerBarrels(consumer);
         registerCrucibles(consumer);
         registerSieves(consumer);
@@ -106,6 +120,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerCustomRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerCustomRecipes");
         registerFluidItemRecipes(consumer);
         registerSieveRecipes(consumer);
         registerHammerRecipes(consumer);
@@ -216,6 +231,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerBarrels(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerBarrels");
         createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
         createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
         createConditionalBarrel(consumer, ATMOSPHERIC_LOADED, ENABlocks.BARREL_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
@@ -233,6 +249,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerCrucibles(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerCrucibles");
         createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
         createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
         createConditionalCrucible(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUCIBLE_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
@@ -250,6 +267,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerSieves(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerSieves");
         createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_ASPEN, AtmosphericBlocks.ASPEN_PLANKS.get(), AtmosphericBlocks.ASPEN_SLAB.get());
         createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_GRIMWOOD, AtmosphericBlocks.GRIMWOOD_PLANKS.get(), AtmosphericBlocks.GRIMWOOD_SLAB.get());
         createConditionalSieve(consumer, ATMOSPHERIC_LOADED, ENABlocks.SIEVE_KOUSA, AtmosphericBlocks.KOUSA_PLANKS.get(), AtmosphericBlocks.KOUSA_SLAB.get());
@@ -271,6 +289,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerBeehives(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerBeehives");
         createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.SPRUCE_BEEHIVE.get(), Blocks.SPRUCE_PLANKS);
         createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.BIRCH_BEEHIVE.get(), Blocks.BIRCH_PLANKS);
         createConditionalBeehive(consumer, WOODWORKS_LOADED, WoodworksBlocks.ACACIA_BEEHIVE.get(), Blocks.ACACIA_PLANKS);
@@ -301,6 +320,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerKilnRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerKilnRecipes");
         baking(consumer, ExNihiloBlocks.CRUCIBLE_UNFIRED.get(), ExNihiloBlocks.CRUCIBLE_FIRED.get(), 0.7F, 100);
     }
 
@@ -313,6 +333,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerFluidItemRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerFluidItemRecipes");
         createConditionalFluidItemRecipe(
                 consumer,
                 UPGRADE_AQUATIC_LOADED,
@@ -341,6 +362,13 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
                 ENAItems.ELDER_PRISMARINE_CORAL_LARVA.get(),
                 UABlocks.ELDER_PRISMARINE_CORAL_BLOCK.get(),
                 "elder_prismarine_coral");
+        createConditionalFluidItemRecipe(
+                consumer,
+                UPGRADE_AQUATIC_LOADED,
+                seawater,
+                ENAItems.FINGER_CORAL_LARVA.get(),
+                UABlocks.FINGER_CORAL_BLOCK.get(),
+                "finger_coral");
         createConditionalFluidItemRecipe(
                 consumer,
                 UPGRADE_AQUATIC_LOADED,
@@ -425,6 +453,7 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
     }
 
     private void registerCompostRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerCompostRecipes");
         createConditionalCompostRecipe(consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.PASSION_VINE.get(), 100, "passion_vine");
         createConditionalCompostRecipe(consumer, ATMOSPHERIC_LOADED, AtmosphericItems.PASSION_VINE_COIL.get(), 800, "passion_vine_coil");
         createConditionalCompostRecipe(consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.BARREL_CACTUS.get(), 100, "barrel_cactus");
@@ -548,356 +577,457 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
         createConditionalCompostRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.ROTTEN_FLESH_BLOCK.get(), 900, "rotten_flesh_block");
     }
 
-    private void registerHammerRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        createHammerRecipes(
-                consumer, AtmosphericBlocks.IVORY_TRAVERTINE.get(), ENABlocks.CRUSHED_IVORY_TRAVERTINE.get(), "ivory_travertine");
-        createHammerRecipes(
-                consumer, AtmosphericBlocks.PEACH_TRAVERTINE.get(), ENABlocks.CRUSHED_PEACH_TRAVERTINE.get(), "peach_travertine");
-        createHammerRecipes(
-                consumer, AtmosphericBlocks.PERSIMMON_TRAVERTINE.get(), ENABlocks.CRUSHED_PERSIMMON_TRAVERTINE.get(), "persimmon_travertine");
-        createHammerRecipes(
-                consumer, AtmosphericBlocks.SAFFRON_TRAVERTINE.get(), ENABlocks.CRUSHED_SAFFRON_TRAVERTINE.get(), "saffron_travertine");
+    protected void createConditionalHammerRecipe(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull Block blockInput, @Nonnull Block blockOutput, @Nonnull String id) {
+        conditionalRecipe(consumer, condition, ENAHammerRecipeBuilder.builder().input(blockInput).addDrop(blockOutput), this.hammerLoc(id));
+    }
 
-        createHammerRecipes(consumer, UABlocks.ACAN_CORAL_BLOCK.get(), UABlocks.ACAN_CORAL.get(), "acan_coral");
-        createHammerRecipes(consumer, UABlocks.BRANCH_CORAL_BLOCK.get(), UABlocks.BRANCH_CORAL.get(), "branch_coral");
-        createHammerRecipes(consumer, UABlocks.CHROME_CORAL_BLOCK.get(), UABlocks.CHROME_CORAL.get(), "chrome_coral");
-        createHammerRecipes(consumer, UABlocks.ELDER_PRISMARINE_CORAL_BLOCK.get(), UABlocks.ELDER_PRISMARINE_CORAL.get(), "elder_prismarine_coral");
-        createHammerRecipes(consumer, UABlocks.MOSS_CORAL_BLOCK.get(), UABlocks.MOSS_CORAL.get(), "moss_coral");
-        createHammerRecipes(consumer, UABlocks.PETAL_CORAL_BLOCK.get(), UABlocks.PETAL_CORAL.get(), "petal_coral");
-        createHammerRecipes(consumer, UABlocks.PILLOW_CORAL_BLOCK.get(), UABlocks.PILLOW_CORAL.get(), "pillow_coral");
-        createHammerRecipes(consumer, UABlocks.PRISMARINE_CORAL_BLOCK.get(), UABlocks.PRISMARINE_CORAL.get(), "prismarine_coral");
-        createHammerRecipes(consumer, UABlocks.ROCK_CORAL_BLOCK.get(), UABlocks.ROCK_CORAL.get(), "rock_coral");
-        createHammerRecipes(consumer, UABlocks.SILK_CORAL_BLOCK.get(), UABlocks.SILK_CORAL.get(), "silk_coral");
-        createHammerRecipes(consumer, UABlocks.STAR_CORAL_BLOCK.get(), UABlocks.STAR_CORAL.get(), "star_coral");
-        createHammerRecipes(consumer, UABlocks.ACAN_CORAL.get(), UABlocks.ACAN_CORAL_FAN.get(), "acan_coral_fan");
-        createHammerRecipes(consumer, UABlocks.BRANCH_CORAL.get(), UABlocks.BRANCH_CORAL_FAN.get(), "branch_coral_fan");
-        createHammerRecipes(consumer, UABlocks.CHROME_CORAL.get(), UABlocks.CHROME_CORAL_FAN.get(), "chrome_coral_fan");
-        createHammerRecipes(consumer, UABlocks.ELDER_PRISMARINE_CORAL.get(), UABlocks.ELDER_PRISMARINE_CORAL_FAN.get(), "elder_prismarine_coral_fan");
-        createHammerRecipes(consumer, UABlocks.MOSS_CORAL.get(), UABlocks.MOSS_CORAL_FAN.get(), "moss_coral_fan");
-        createHammerRecipes(consumer, UABlocks.PETAL_CORAL.get(), UABlocks.PETAL_CORAL_FAN.get(), "petal_coral_fan");
-        createHammerRecipes(consumer, UABlocks.PILLOW_CORAL.get(), UABlocks.PILLOW_CORAL_FAN.get(), "pillow_coral_fan");
-        createHammerRecipes(consumer, UABlocks.PRISMARINE_CORAL.get(), UABlocks.PRISMARINE_CORAL_FAN.get(), "prismarine_coral_fan");
-        createHammerRecipes(consumer, UABlocks.ROCK_CORAL.get(), UABlocks.ROCK_CORAL_FAN.get(), "rock_coral_fan");
-        createHammerRecipes(consumer, UABlocks.SILK_CORAL.get(), UABlocks.SILK_CORAL_FAN.get(), "silk_coral_fan");
-        createHammerRecipes(consumer, UABlocks.STAR_CORAL.get(), UABlocks.STAR_CORAL_FAN.get(), "star_coral_fan");
+    private void registerHammerRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
+        logger.debug("registerHammerRecipes");
+        createConditionalHammerRecipe(
+                consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.IVORY_TRAVERTINE.get(), ENABlocks.CRUSHED_IVORY_TRAVERTINE.get(), "ivory_travertine");
+        createConditionalHammerRecipe(
+                consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.PEACH_TRAVERTINE.get(), ENABlocks.CRUSHED_PEACH_TRAVERTINE.get(), "peach_travertine");
+        createConditionalHammerRecipe(
+                consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.PERSIMMON_TRAVERTINE.get(), ENABlocks.CRUSHED_PERSIMMON_TRAVERTINE.get(), "persimmon_travertine");
+        createConditionalHammerRecipe(
+                consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.SAFFRON_TRAVERTINE.get(), ENABlocks.CRUSHED_SAFFRON_TRAVERTINE.get(), "saffron_travertine");
+
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.ACAN_CORAL_BLOCK.get(), UABlocks.ACAN_CORAL.get(), "acan_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.BRANCH_CORAL_BLOCK.get(), UABlocks.BRANCH_CORAL.get(), "branch_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.CHROME_CORAL_BLOCK.get(), UABlocks.CHROME_CORAL.get(), "chrome_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.ELDER_PRISMARINE_CORAL_BLOCK.get(), UABlocks.ELDER_PRISMARINE_CORAL.get(), "elder_prismarine_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.FINGER_CORAL_BLOCK.get(), UABlocks.FINGER_CORAL.get(), "finger_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.MOSS_CORAL_BLOCK.get(), UABlocks.MOSS_CORAL.get(), "moss_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PETAL_CORAL_BLOCK.get(), UABlocks.PETAL_CORAL.get(), "petal_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PILLOW_CORAL_BLOCK.get(), UABlocks.PILLOW_CORAL.get(), "pillow_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PRISMARINE_CORAL_BLOCK.get(), UABlocks.PRISMARINE_CORAL.get(), "prismarine_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.ROCK_CORAL_BLOCK.get(), UABlocks.ROCK_CORAL.get(), "rock_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.SILK_CORAL_BLOCK.get(), UABlocks.SILK_CORAL.get(), "silk_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.STAR_CORAL_BLOCK.get(), UABlocks.STAR_CORAL.get(), "star_coral");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.ACAN_CORAL.get(), UABlocks.ACAN_CORAL_FAN.get(), "acan_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.BRANCH_CORAL.get(), UABlocks.BRANCH_CORAL_FAN.get(), "branch_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.CHROME_CORAL.get(), UABlocks.CHROME_CORAL_FAN.get(), "chrome_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.ELDER_PRISMARINE_CORAL.get(), UABlocks.ELDER_PRISMARINE_CORAL_FAN.get(), "elder_prismarine_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.FINGER_CORAL.get(), UABlocks.FINGER_CORAL_FAN.get(), "finger_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.MOSS_CORAL.get(), UABlocks.MOSS_CORAL_FAN.get(), "moss_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PETAL_CORAL.get(), UABlocks.PETAL_CORAL_FAN.get(), "petal_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PILLOW_CORAL.get(), UABlocks.PILLOW_CORAL_FAN.get(), "pillow_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PRISMARINE_CORAL.get(), UABlocks.PRISMARINE_CORAL_FAN.get(), "prismarine_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.ROCK_CORAL.get(), UABlocks.ROCK_CORAL_FAN.get(), "rock_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.SILK_CORAL.get(), UABlocks.SILK_CORAL_FAN.get(), "silk_coral_fan");
+        createConditionalHammerRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.STAR_CORAL.get(), UABlocks.STAR_CORAL_FAN.get(), "star_coral_fan");
+    }
+
+    protected void createConditionalHeatRecipe(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull Block block, int amount, @Nonnull String id) {
+        conditionalRecipe(consumer, condition, ENAHeatRecipeBuilder.builder().input(block).amount(amount), this.heatLoc(id));
+    }
+
+    protected void createConditionalHeatRecipe(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull Block block, int amount, @Nonnull StatePropertiesPredicate properties, @Nonnull String id) {
+        conditionalRecipe(consumer, condition, ENAHeatRecipeBuilder.builder().input(block).amount(amount).properties(properties), this.heatLoc(id));
     }
 
     private void registerHeatRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        createHeatRecipes(consumer, CCBlocks.CUPRIC_TORCH.get(), 1, "cuptic_torch");
-        createHeatRecipes(consumer, EEBlocks.ENDER_TORCH.get(), 1, "ender_torch");
-        createHeatRecipes(consumer, CCBlocks.CUPRIC_FIRE.get(), 4, "cupric_fire");
-        createHeatRecipes(consumer, EEBlocks.ENDER_FIRE.get(), 4, "ender_fire");
-//        createHeatRecipes(consumer, UABlocks.PINK_JELLY_TORCH.get(), 2, "pink_jelly_torch");
-//        createHeatRecipes(consumer, UABlocks.PURPLE_JELLY_TORCH.get(), 2, "purple_jelly_torch");
-//        createHeatRecipes(consumer, UABlocks.BLUE_JELLY_TORCH.get(), 2, "blue_jelly_torch");
-//        createHeatRecipes(consumer, UABlocks.GREEN_JELLY_TORCH.get(), 2, "green_jelly_torch");
-//        createHeatRecipes(consumer, UABlocks.YELLOW_JELLY_TORCH.get(), 2, "yellow_jelly_torch");
-//        createHeatRecipes(consumer, UABlocks.ORANGE_JELLY_TORCH.get(), 2, "orange_jelly_torch");
-//        createHeatRecipes(consumer, UABlocks.RED_JELLY_TORCH.get(), 2, "red_jelly_torch");
-//        createHeatRecipes(consumer, UABlocks.WHITE_JELLY_TORCH.get(), 2, "white_jelly_torch");
-        createHeatRecipes(consumer, CCBlocks.LAVA_LAMP.get(), 3, "lava_lamp");
+        logger.debug("registerHeatRecipes");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_TORCH.get(), 1, "cuptic_torch");
+        createConditionalHeatRecipe(consumer, ENDERGETIC_LOADED, EEBlocks.ENDER_TORCH.get(), 1, "ender_torch");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_FIRE.get(), 4, "cupric_fire");
+        createConditionalHeatRecipe(consumer, ENDERGETIC_LOADED, EEBlocks.ENDER_FIRE.get(), 4, "ender_fire");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PINK_JELLY_TORCH.get(), 2, "pink_jelly_torch");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PURPLE_JELLY_TORCH.get(), 2, "purple_jelly_torch");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.BLUE_JELLY_TORCH.get(), 2, "blue_jelly_torch");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.GREEN_JELLY_TORCH.get(), 2, "green_jelly_torch");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.YELLOW_JELLY_TORCH.get(), 2, "yellow_jelly_torch");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.ORANGE_JELLY_TORCH.get(), 2, "orange_jelly_torch");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.RED_JELLY_TORCH.get(), 2, "red_jelly_torch");
+//        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.WHITE_JELLY_TORCH.get(), 2, "white_jelly_torch");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.LAVA_LAMP.get(), 3, "lava_lamp");
         StatePropertiesPredicate lit =
                 StatePropertiesPredicate.Builder.properties()
                         .hasProperty(BlockStateProperties.LIT, true)
                         .build();
-        createHeatRecipes(consumer, CCBlocks.CUPRIC_CAMPFIRE.get(), 4, lit, "cupric_campfire");
-        createHeatRecipes(consumer, EEBlocks.ENDER_CAMPFIRE.get(), 4, lit, "ender_campfire");
-        createHeatRecipes(consumer, CCBlocks.BRAZIER.get(), 5, lit, "brazier");
-        createHeatRecipes(consumer, CCBlocks.SOUL_BRAZIER.get(), 5, lit, "soul_brazier");
-        createHeatRecipes(consumer, CCBlocks.CUPRIC_BRAZIER.get(), 5, lit, "cupric_brazier");
-        createHeatRecipes(consumer, CCBlocks.ENDER_BRAZIER.get(), 5, lit, "ender_brazier");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_CAMPFIRE.get(), 4, lit, "cupric_campfire");
+        createConditionalHeatRecipe(consumer, ENDERGETIC_LOADED, EEBlocks.ENDER_CAMPFIRE.get(), 4, lit, "ender_campfire");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.BRAZIER.get(), 5, lit, "brazier");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.SOUL_BRAZIER.get(), 5, lit, "soul_brazier");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_BRAZIER.get(), 5, lit, "cupric_brazier");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.ENDER_BRAZIER.get(), 5, lit, "ender_brazier");
+    }
+
+    protected void createConditionalFiredCrucibleRecipe(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull Block block, int amount, @Nonnull String id) {
+        conditionalRecipe(consumer, condition, ENACrucibleRecipeBuilder.builder().input(Ingredient.of(new ItemLike[]{block})).amount(amount).fluidResult(Fluids.LAVA).crucibleType(CrucibleTypeEnum.FIRED), this.crucibleLoc(id));
     }
 
     private void registerCrucibleRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.IVORY_TRAVERTINE.get(), 250, "ivory_travertine");
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.PEACH_TRAVERTINE.get(), 250, "peach_travertine");
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.PERSIMMON_TRAVERTINE.get(), 250, "persimmon_travertine");
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.SAFFRON_TRAVERTINE.get(), 250, "saffron_travertine");
+        logger.debug("registerCrucibleRecipes");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.IVORY_TRAVERTINE.get(), 250, "ivory_travertine");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.PEACH_TRAVERTINE.get(), 250, "peach_travertine");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.PERSIMMON_TRAVERTINE.get(), 250, "persimmon_travertine");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, AtmosphericBlocks.SAFFRON_TRAVERTINE.get(), 250, "saffron_travertine");
 
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.IVORY_TRAVERTINE.get(), 200, "ivory_travertine_tuff");
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.PEACH_TRAVERTINE.get(), 200, "peach_travertine_tuff");
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.PERSIMMON_TRAVERTINE.get(), 200, "persimmon_travertine_tuff");
-        createFiredCrucibleRecipes(consumer, AtmosphericBlocks.SAFFRON_TRAVERTINE.get(), 200, "saffron_travertine_tuff");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUSHED_IVORY_TRAVERTINE.get(), 200, "crushed_ivory_travertine");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUSHED_PEACH_TRAVERTINE.get(), 200, "crushed_peach_travertine");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUSHED_PERSIMMON_TRAVERTINE.get(), 200, "crushed_persimmon_travertine");
+        createConditionalFiredCrucibleRecipe(consumer, ATMOSPHERIC_LOADED, ENABlocks.CRUSHED_SAFFRON_TRAVERTINE.get(), 200, "crushed_saffron_travertine");
+    }
+
+    protected void createConditionalSieveRecipe(@Nonnull Consumer<FinishedRecipe> consumer, ICondition condition, @Nonnull Ingredient input, @Nonnull ItemLike result, @Nonnull MeshType mesh, @Nonnull float chance, @Nonnull boolean isWaterLogged, @Nonnull String id) {
+        ENASieveRecipeBuilder builder = ENASieveRecipeBuilder.builder()
+                .input(input)
+                .drop(result)
+                .addRoll(new MeshWithChance(mesh, chance));
+
+        conditionalRecipe(consumer, condition, isWaterLogged ? builder.isWaterlogged() : builder, this.sieveLoc(id));
     }
 
     private void registerSieveRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.SAND))
-                .addResult(UABlocks.BEACHGRASS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .build(consumer, sieveLoc("beachgrass"));
+        logger.debug("registerSieveRecipes");
+        final MeshType STRING = ExNihiloItems.MESH_STRING.get().getType();
+        final MeshType FLINT = ExNihiloItems.MESH_FLINT.get().getType();
+        final MeshType IRON = ExNihiloItems.MESH_IRON.get().getType();
+        final MeshType DIAMOND = ExNihiloItems.MESH_DIAMOND.get().getType();
+        final MeshType EMERALD = ExNihiloItems.MESH_EMERALD.get().getType();
+        final MeshType NETHERITE = ExNihiloItems.MESH_NETHERITE.get().getType();
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.ACAN_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_cyan_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.BRANCH_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_black_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.CHROME_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_gray_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.ELDER_PRISMARINE_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.025F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_elder_prismarine_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.MOSS_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_green_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.PETAL_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_light_blue_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.PILLOW_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_white_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.PRISMARINE_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.025F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_prismarine_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.ROCK_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_brown_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.SILK_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_purple_coral"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(ENAItems.STAR_CORAL_LARVA.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("seed_lime_coral"));
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(UABlocks.TONGUE_KELP.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.025F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("tongue_kelp"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(UABlocks.THORNY_KELP.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.025F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("thorny_kelp"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(UABlocks.OCHRE_KELP.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.025F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("ochre_kelp"));
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(UABlocks.POLAR_KELP.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.025F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("polar_kelp"));
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                UABlocks.BEACHGRASS.get(),
+                STRING, 0.05F,
+                false,
+                "beachgrass");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.SAND))
-                .addResult(UABlocks.DRIFTWOOD_LOG.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("driftwood"));
+        logger.debug("registerSieveRecipes (Corals)");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.ACAN_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_cyan_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.BRANCH_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_black_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.ELDER_PRISMARINE_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_elder_prismarine_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.FINGER_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_orange_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.MOSS_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_green_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.PETAL_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_light_blue_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.PILLOW_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_white_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.PRISMARINE_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_prismarine_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.ROCK_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_brown_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.SILK_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_purple_coral");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                ENAItems.STAR_CORAL_LARVA.get(),
+                IRON, 0.05F,
+                true,
+                "seed_lime_coral");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.DIRT))
-                .addResult(AutumnityItems.FOUL_BERRY_PIPS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("foul_berry_pips"));
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.DIRT))
-                .addResult(NeapolitanItems.STRAWBERRY_PIPS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("strawberry_pips"));
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                UABlocks.TONGUE_KELP.get(),
+                IRON, 0.025F,
+                true,
+                "tongue_kelp");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                UABlocks.THORNY_KELP.get(),
+                IRON, 0.025F,
+                true,
+                "thorny_kelp");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                UABlocks.OCHRE_KELP.get(),
+                IRON, 0.025F,
+                true,
+                "ochre_kelp");
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                UABlocks.POLAR_KELP.get(),
+                IRON, 0.025F,
+                true,
+                "polar_kelp");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.DIRT))
-                .addResult(NeapolitanItems.ADZUKI_BEANS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("adzuki_beans"));
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                UABlocks.DRIFTWOOD_LOG.get(),
+                STRING, 0.025F,
+                true,
+                "driftwood");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.DIRT))
-                .addResult(EnvironmentalItems.CATTAIL_SEEDS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("cattail_seeds"));
+        createConditionalSieveRecipe(consumer, AUTUMNITY_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                AutumnityItems.FOUL_BERRY_PIPS.get(),
+                STRING, 0.05F,
+                false,
+                "foul_berry_pips");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.DIRT))
-                .addResult(UABlocks.PURPLE_PICKERELWEED.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("purple_pickerelweed"));
+        createConditionalSieveRecipe(consumer, NEAPOLITAN_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                NeapolitanItems.STRAWBERRY_PIPS.get(),
+                STRING, 0.05F,
+                false,
+                "strawberry_pips");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.DIRT))
-                .addResult(UABlocks.BLUE_PICKERELWEED.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .isWaterlogged()
-                .build(consumer, sieveLoc("blue_pickerelweed"));
+        createConditionalSieveRecipe(consumer, NEAPOLITAN_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                NeapolitanItems.ADZUKI_BEANS.get(),
+                STRING, 0.05F,
+                false,
+                "adzuki_beans");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.SAND))
-                .addResult(NeapolitanBlocks.SMALL_BANANA_FROND.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("banana_frond"));
+        createConditionalSieveRecipe(consumer, ENVIRONMENTAL_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                EnvironmentalItems.CATTAIL_SEEDS.get(),
+                STRING, 0.05F,
+                true,
+                "cattail_seeds");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.SAND))
-                .addResult(NeapolitanItems.VANILLA_PODS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .build(consumer, sieveLoc("vanilla_pods"));
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                UABlocks.PURPLE_PICKERELWEED.get(),
+                STRING, 0.05F,
+                true,
+                "purple_pickerelweed");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.SAND))
-                .addResult(NeapolitanItems.MINT_SPROUT.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .build(consumer, sieveLoc("mint_sprout"));
+        createConditionalSieveRecipe(consumer, UPGRADE_AQUATIC_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                UABlocks.BLUE_PICKERELWEED.get(),
+                STRING, 0.05F,
+                true,
+                "blue_pickerelweed");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.SAND))
-                .addResult(AtmosphericBlocks.PASSION_VINE.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .build(consumer, sieveLoc("passion_vine"));
+        createConditionalSieveRecipe(consumer, NEAPOLITAN_LOADED,
+                Ingredient.of(Blocks.SAND),
+                NeapolitanBlocks.SMALL_BANANA_FROND.get(),
+                STRING, 0.05F,
+                false,
+                "small_banana_frond");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(AtmosphericBlocks.ARID_SAND.get()))
-                .addResult(AtmosphericItems.ALOE_KERNELS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("aloe_kernels"));
+        createConditionalSieveRecipe(consumer, NEAPOLITAN_LOADED,
+                Ingredient.of(Blocks.SAND),
+                NeapolitanItems.VANILLA_PODS.get(),
+                STRING, 0.03F,
+                false,
+                "vanilla_pods");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(AtmosphericBlocks.RED_ARID_SAND.get()))
-                .addResult(AtmosphericItems.ALOE_KERNELS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("aloe_kernels_red"));
+        createConditionalSieveRecipe(consumer, NEAPOLITAN_LOADED,
+                Ingredient.of(Blocks.SAND),
+                NeapolitanItems.MINT_SPROUT.get(),
+                STRING, 0.03F,
+                false,
+                "mint_sprout");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(AtmosphericBlocks.ARID_SAND.get()))
-                .addResult(AtmosphericBlocks.YUCCA_SAPLING.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("yucca_sapling_arid"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(Blocks.SAND),
+                AtmosphericBlocks.PASSION_VINE.get(),
+                STRING, 0.03F,
+                false,
+                "passion_vine");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(AtmosphericBlocks.RED_ARID_SAND.get()))
-                .addResult(AtmosphericBlocks.YUCCA_SAPLING.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("yucca_sapling_arid_red"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.ARID_SAND.get()),
+                AtmosphericItems.ALOE_KERNELS.get(),
+                STRING, 0.05F,
+                false,
+                "aloe_kernels");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.SAND))
-                .addResult(AtmosphericBlocks.BARREL_CACTUS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.03F))
-                .build(consumer, sieveLoc("barrel_cactus"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.RED_ARID_SAND.get()),
+                AtmosphericItems.ALOE_KERNELS.get(),
+                STRING, 0.05F,
+                false,
+                "aloe_kernels_red");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.DIRT))
-                .addResult(BGItems.SWEET_BERRY_PIPS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("sweet_berry_pips"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.ARID_SAND.get()),
+                AtmosphericBlocks.YUCCA_SAPLING.get(),
+                STRING, 0.05F,
+                false,
+                "yucca_sapling_arid");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.DIRT))
-                .addResult(BGItems.GLOW_BERRY_PIPS.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("glow_berry_pips"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.RED_ARID_SAND.get()),
+                AtmosphericBlocks.YUCCA_SAPLING.get(),
+                STRING, 0.05F,
+                false,
+                "yucca_sapling_arid_red");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ItemTags.DIRT))
-                .addResult(ENAItems.CRUSTOSE_SPORE.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("crustose_spores"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.ARID_SAND.get()),
+                AtmosphericBlocks.BARREL_CACTUS.get(),
+                STRING, 0.05F,
+                false,
+                "barrel_cactus");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(Blocks.GRAVEL))
-                .addResult(CCItems.SPINEL.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_FLINT.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("spinel"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.RED_ARID_SAND.get()),
+                AtmosphericBlocks.BARREL_CACTUS.get(),
+                STRING, 0.05F,
+                false,
+                "barrel_cactus_red");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(CCBlocks.ROCKY_DIRT.get()))
-                .addResult(Blocks.DIRT)
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.4F))
-                .build(consumer, sieveLoc("dirt_rd"));
+        createConditionalSieveRecipe(consumer, BERRY_GOOD_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                BGItems.SWEET_BERRY_PIPS.get(),
+                STRING, 0.05F,
+                false,
+                "sweet_berry_pips");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(CCBlocks.ROCKY_DIRT.get()))
-                .addResult(Blocks.COBBLESTONE)
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.4F))
-                .build(consumer, sieveLoc("cobblestone_rd"));
+        createConditionalSieveRecipe(consumer, BERRY_GOOD_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                BGItems.GLOW_BERRY_PIPS.get(),
+                STRING, 0.05F,
+                false,
+                "glow_berry_pips");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(EEBlocks.EUMUS.get()))
-                .addResult(EEBlocks.CORROCK_CROWN_END_STANDING.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("corrock_crown"));
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(Blocks.DIRT),
+                ENAItems.CRUSTOSE_SPORE.get(),
+                FLINT, 0.05F,
+                false,
+                "crustose_spores");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(EEBlocks.EUMUS.get()))
-                .addResult(EEBlocks.CORROCK_END.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("corrock"));
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(Blocks.GRAVEL),
+                CCItems.SPINEL.get(),
+                FLINT, 0.05F,
+                false,
+                "spinel");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(EEBlocks.EUMUS.get()))
-                .addResult(EEBlocks.POISE_BUSH.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("poise_bush"));
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(CCBlocks.ROCKY_DIRT.get()),
+                Blocks.DIRT,
+                STRING, 0.4F,
+                false,
+                "dirt_rd");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(EEBlocks.EUMUS.get()))
-                .addResult(ENAItems.POISMOSS_SPORE.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("poismoss_spore_eumus"));
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(CCBlocks.ROCKY_DIRT.get()),
+                Blocks.COBBLESTONE,
+                STRING, 0.4F,
+                false,
+                "cobblestone_rd");
 
-        SieveRecipeBuilder.builder()
-                .input(Ingredient.of(ExNihiloBlocks.CRUSHED_END_STONE.get()))
-                .addResult(ENAItems.POISMOSS_SPORE.get())
-                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                .build(consumer, sieveLoc("poismoss_spore_endstone"));
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(EEBlocks.EUMUS.get()),
+                EEBlocks.CORROCK_CROWN_END_STANDING.get(),
+                STRING, 0.05F,
+                false,
+                "corrock_crown");
 
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(EEBlocks.EUMUS.get()),
+                EEBlocks.CORROCK_END.get(),
+                STRING, 0.05F,
+                false,
+                "corrock");
+
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(EEBlocks.EUMUS.get()),
+                EEBlocks.POISE_BUSH.get(),
+                STRING, 0.05F,
+                false,
+                "poise_bush");
+
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(EEBlocks.EUMUS.get()),
+                ENAItems.POISMOSS_SPORE.get(),
+                FLINT, 0.05F,
+                false,
+                "poismoss_spore_eumus");
+
+        createConditionalSieveRecipe(consumer, CAVERNS_AND_CHASMS_LOADED,
+                Ingredient.of(ExNihiloBlocks.CRUSHED_END_STONE.get()),
+                ENAItems.POISMOSS_SPORE.get(),
+                FLINT, 0.05F,
+                false,
+                "poismoss_spore_endstone");
+
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.FLOWERING_MORADO_LEAVES.get()),
+                AtmosphericBlocks.MORADO_SAPLING.get(),
+                STRING, 0.05F,
+                false,
+                "flowering_morado_leaves");
+
+        createConditionalSieveRecipe(consumer, ATMOSPHERIC_LOADED,
+                Ingredient.of(AtmosphericBlocks.FLOWERING_MORADO_LEAVES.get()),
+                AtmosphericItems.YELLOW_BLOSSOMS.get(),
+                STRING, 0.05F,
+                false,
+                "flowering_morado_leaves_blossoms");
+
+        logger.debug("registerSieveRecipes (Saplings)");
         getAbnormalsLeavesSaplings()
                 .forEach(
                         (input, drop) -> {
                             @Nullable final ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(input);
+                            @Nullable final ResourceLocation resourceLocation2 = ForgeRegistries.ITEMS.getKey(drop);
+
+                            logger.debug(resourceLocation.toString());
                             if (resourceLocation != null) {
-                                SieveRecipeBuilder.builder()
-                                        .input(Ingredient.of(input))
-                                        .addResult(drop)
-                                        .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
-                                        .addRoll(new MeshWithChance(ExNihiloItems.MESH_FLINT.get().getType(), 0.1F))
-                                        .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.15F))
-                                        .addRoll(new MeshWithChance(ExNihiloItems.MESH_DIAMOND.get().getType(), 0.2F))
-                                        .build(consumer, sieveLoc(resourceLocation.getPath()));
+                                logger.debug(resourceLocation.toString());
+                                conditionalRecipe(consumer, new ModLoadedCondition(resourceLocation.getNamespace()),
+                                        ENASieveRecipeBuilder.builder()
+                                            .input(Ingredient.of(input))
+                                            .drop(drop)
+                                            .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F))
+                                            .addRoll(new MeshWithChance(ExNihiloItems.MESH_FLINT.get().getType(), 0.1F))
+                                            .addRoll(new MeshWithChance(ExNihiloItems.MESH_IRON.get().getType(), 0.15F))
+                                            .addRoll(new MeshWithChance(ExNihiloItems.MESH_DIAMOND.get().getType(), 0.2F)),
+                                        sieveLoc(resourceLocation.getPath()));
+                            }
+                            if (resourceLocation != null) {
+                                logger.debug(resourceLocation.toString());
+                                conditionalRecipe(consumer, new ModLoadedCondition(resourceLocation.getNamespace()),
+                                        ENASieveRecipeBuilder.builder()
+                                                .input(Ingredient.of(Blocks.DIRT))
+                                                .drop(drop)
+                                                .addRoll(new MeshWithChance(ExNihiloItems.MESH_STRING.get().getType(), 0.05F)),
+                                        sieveLoc(resourceLocation2.getPath()));
                             }
                         });
     }

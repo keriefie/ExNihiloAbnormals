@@ -1,15 +1,28 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "tag": "minecraft:dirt"
-  },
-  "result": {
-    "item": "exnihiloabnormals:crustose_spores"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.05,
-      "mesh": "string"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "minecraft:dirt"
+        },
+        "result": {
+          "item": "exnihiloabnormals:crustose_spores"
+        },
+        "rolls": [
+          {
+            "chance": 0.05,
+            "mesh": "flint"
+          }
+        ]
+      }
     }
   ]
 }

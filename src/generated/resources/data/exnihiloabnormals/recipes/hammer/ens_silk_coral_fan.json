@@ -1,13 +1,26 @@
 {
-  "type": "exnihilosequentia:hammer",
-  "input": {
-    "item": "upgrade_aquatic:silk_coral"
-  },
-  "results": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 1.0,
-      "count": 1,
-      "item": "upgrade_aquatic:silk_coral_fan"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "upgrade_aquatic"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:hammer",
+        "input": {
+          "item": "upgrade_aquatic:silk_coral"
+        },
+        "results": [
+          {
+            "chance": 1.0,
+            "count": 1,
+            "item": "upgrade_aquatic:silk_coral_fan"
+          }
+        ]
+      }
     }
   ]
 }

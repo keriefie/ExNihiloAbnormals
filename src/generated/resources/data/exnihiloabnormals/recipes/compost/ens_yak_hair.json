@@ -1,7 +1,20 @@
 {
-  "type": "exnihilosequentia:compost",
-  "amount": 40,
-  "input": {
-    "item": "environmental:yak_hair"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "environmental"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:compost",
+        "amount": 40,
+        "input": {
+          "item": "environmental:yak_hair"
+        }
+      }
+    }
+  ]
 }

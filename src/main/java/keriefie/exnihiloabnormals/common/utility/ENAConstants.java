@@ -14,6 +14,7 @@ public class ENAConstants {
 
         public static final String ATMOSPHERIC = "atmospheric";
         public static final String AUTUMNITY = "autumnity";
+        public static final String BERRY_GOOD = "berry_good";
         public static final String BUZZIER_BEES = "buzzier_bees";
         public static final String ENDERGETIC = "endergetic";
         public static final String ENVIRONMENTAL = "environmental";
@@ -44,6 +45,7 @@ public class ENAConstants {
         public static final String BRANCH_CORAL_LARVA = createResourceName("branch_coral_larva");
         public static final String CHROME_CORAL_LARVA = createResourceName("chrome_coral_larva");
         public static final String ELDER_PRISMARINE_CORAL_LARVA = createResourceName("elder_prismarine_coral_larva");
+        public static final String FINGER_CORAL_LARVA = createResourceName("finger_coral_larva");
         public static final String MOSS_CORAL_LARVA = createResourceName("moss_coral_larva");
         public static final String PETAL_CORAL_LARVA = createResourceName("petal_coral_larva");
         public static final String PILLOW_CORAL_LARVA = createResourceName("pillow_coral_larva");

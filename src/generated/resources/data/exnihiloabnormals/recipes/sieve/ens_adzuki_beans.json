@@ -1,15 +1,28 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "item": "minecraft:dirt"
-  },
-  "result": {
-    "item": "neapolitan:adzuki_beans"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.05,
-      "mesh": "string"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "neapolitan"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "minecraft:dirt"
+        },
+        "result": {
+          "item": "neapolitan:adzuki_beans"
+        },
+        "rolls": [
+          {
+            "chance": 0.05,
+            "mesh": "string"
+          }
+        ]
+      }
     }
   ]
 }

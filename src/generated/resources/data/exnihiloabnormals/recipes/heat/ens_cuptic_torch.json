@@ -1,5 +1,18 @@
 {
-  "type": "exnihilosequentia:heat",
-  "amount": 1,
-  "block": "caverns_and_chasms:cupric_torch"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "caverns_and_chasms"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:heat",
+        "amount": 1,
+        "block": "caverns_and_chasms:cupric_torch"
+      }
+    }
+  ]
 }

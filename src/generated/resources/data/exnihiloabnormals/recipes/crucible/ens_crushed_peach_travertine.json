@@ -1,0 +1,24 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:crucible",
+        "amount": 200,
+        "crucibleType": "fired",
+        "fluidResult": {
+          "fluid": "minecraft:lava"
+        },
+        "input": {
+          "item": "exnihiloabnormals:crushed_peach_travertine"
+        }
+      }
+    }
+  ]
+}

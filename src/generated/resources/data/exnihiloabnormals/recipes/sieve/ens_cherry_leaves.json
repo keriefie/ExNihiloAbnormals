@@ -1,27 +1,40 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "item": "environmental:cherry_leaves"
-  },
-  "result": {
-    "item": "environmental:cherry_sapling"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.05,
-      "mesh": "string"
-    },
-    {
-      "chance": 0.1,
-      "mesh": "flint"
-    },
-    {
-      "chance": 0.15,
-      "mesh": "iron"
-    },
-    {
-      "chance": 0.2,
-      "mesh": "diamond"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "environmental"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "environmental:cherry_leaves"
+        },
+        "result": {
+          "item": "environmental:cherry_sapling"
+        },
+        "rolls": [
+          {
+            "chance": 0.05,
+            "mesh": "string"
+          },
+          {
+            "chance": 0.1,
+            "mesh": "flint"
+          },
+          {
+            "chance": 0.15,
+            "mesh": "iron"
+          },
+          {
+            "chance": 0.2,
+            "mesh": "diamond"
+          }
+        ]
+      }
     }
   ]
 }

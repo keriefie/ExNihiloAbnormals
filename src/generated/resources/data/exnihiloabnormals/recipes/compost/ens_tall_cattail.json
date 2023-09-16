@@ -1,7 +1,20 @@
 {
-  "type": "exnihilosequentia:compost",
-  "amount": 100,
-  "input": {
-    "item": "environmental:tall_cattail"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "environmental"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:compost",
+        "amount": 100,
+        "input": {
+          "item": "environmental:tall_cattail"
+        }
+      }
+    }
+  ]
 }

@@ -1,5 +1,18 @@
 {
-  "type": "exnihilosequentia:heat",
-  "amount": 1,
-  "block": "endergetic:ender_torch"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "endergetic"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:heat",
+        "amount": 1,
+        "block": "endergetic:ender_torch"
+      }
+    }
+  ]
 }

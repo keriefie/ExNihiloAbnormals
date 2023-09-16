@@ -1,7 +1,20 @@
 {
-  "type": "exnihilosequentia:compost",
-  "amount": 640,
-  "input": {
-    "item": "neapolitan:chiseled_chocolate_bricks"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "neapolitan"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:compost",
+        "amount": 640,
+        "input": {
+          "item": "neapolitan:chiseled_chocolate_bricks"
+        }
+      }
+    }
+  ]
 }

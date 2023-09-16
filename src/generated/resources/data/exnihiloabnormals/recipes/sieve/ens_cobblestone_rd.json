@@ -1,15 +1,28 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "item": "caverns_and_chasms:rocky_dirt"
-  },
-  "result": {
-    "item": "minecraft:cobblestone"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.4,
-      "mesh": "string"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "caverns_and_chasms"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "caverns_and_chasms:rocky_dirt"
+        },
+        "result": {
+          "item": "minecraft:cobblestone"
+        },
+        "rolls": [
+          {
+            "chance": 0.4,
+            "mesh": "string"
+          }
+        ]
+      }
     }
   ]
 }

@@ -1,15 +1,28 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "item": "exnihilosequentia:crushed_end_stone"
-  },
-  "result": {
-    "item": "exnihiloabnormals:poismoss_spores"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.05,
-      "mesh": "string"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "caverns_and_chasms"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "exnihilosequentia:crushed_end_stone"
+        },
+        "result": {
+          "item": "exnihiloabnormals:poismoss_spores"
+        },
+        "rolls": [
+          {
+            "chance": 0.05,
+            "mesh": "flint"
+          }
+        ]
+      }
     }
   ]
 }

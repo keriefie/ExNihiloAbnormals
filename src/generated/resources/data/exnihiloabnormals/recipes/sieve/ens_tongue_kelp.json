@@ -1,16 +1,29 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "tag": "minecraft:sand"
-  },
-  "result": {
-    "item": "upgrade_aquatic:tongue_kelp"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.025,
-      "mesh": "iron"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "upgrade_aquatic"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "minecraft:sand"
+        },
+        "result": {
+          "item": "upgrade_aquatic:tongue_kelp"
+        },
+        "rolls": [
+          {
+            "chance": 0.025,
+            "mesh": "iron"
+          }
+        ],
+        "waterlogged": true
+      }
     }
-  ],
-  "waterlogged": true
+  ]
 }

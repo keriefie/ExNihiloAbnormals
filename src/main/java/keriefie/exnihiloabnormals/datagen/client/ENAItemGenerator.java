@@ -45,6 +45,7 @@ public class ENAItemGenerator extends AbstractItemGenerator {
         registerResource(ENAItems.BRANCH_CORAL_LARVA.get());
         registerResource(ENAItems.CHROME_CORAL_LARVA.get());
         registerResource(ENAItems.ELDER_PRISMARINE_CORAL_LARVA.get());
+        registerResource(ENAItems.FINGER_CORAL_LARVA.get());
         registerResource(ENAItems.MOSS_CORAL_LARVA.get());
         registerResource(ENAItems.PETAL_CORAL_LARVA.get());
         registerResource(ENAItems.PILLOW_CORAL_LARVA.get());

@@ -1,12 +1,25 @@
 {
-  "type": "exnihilosequentia:fluid_item",
-  "fluid": {
-    "fluid": "exnihilosequentia:sea_water"
-  },
-  "input": {
-    "item": "exnihiloabnormals:chrome_coral_larva"
-  },
-  "result": {
-    "item": "upgrade_aquatic:chrome_coral_block"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "upgrade_aquatic"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:fluid_item",
+        "fluid": {
+          "fluid": "exnihilosequentia:sea_water"
+        },
+        "input": {
+          "item": "exnihiloabnormals:chrome_coral_larva"
+        },
+        "result": {
+          "item": "upgrade_aquatic:chrome_coral_block"
+        }
+      }
+    }
+  ]
 }

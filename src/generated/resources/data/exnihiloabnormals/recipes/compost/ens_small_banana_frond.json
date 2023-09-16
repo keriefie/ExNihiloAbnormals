@@ -1,7 +1,20 @@
 {
-  "type": "exnihilosequentia:compost",
-  "amount": 50,
-  "input": {
-    "item": "neapolitan:small_banana_frond"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "neapolitan"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:compost",
+        "amount": 50,
+        "input": {
+          "item": "neapolitan:small_banana_frond"
+        }
+      }
+    }
+  ]
 }

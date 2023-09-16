@@ -1,0 +1,28 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "atmospheric:red_arid_sand"
+        },
+        "result": {
+          "item": "atmospheric:barrel_cactus"
+        },
+        "rolls": [
+          {
+            "chance": 0.05,
+            "mesh": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

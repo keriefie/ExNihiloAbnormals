@@ -1,7 +1,20 @@
 {
-  "type": "exnihilosequentia:compost",
-  "amount": 400,
-  "input": {
-    "item": "atmospheric:aloe_gel_block"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:compost",
+        "amount": 400,
+        "input": {
+          "item": "atmospheric:aloe_gel_block"
+        }
+      }
+    }
+  ]
 }

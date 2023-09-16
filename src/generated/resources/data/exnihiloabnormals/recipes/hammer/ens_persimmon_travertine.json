@@ -1,13 +1,26 @@
 {
-  "type": "exnihilosequentia:hammer",
-  "input": {
-    "item": "atmospheric:persimmon_travertine"
-  },
-  "results": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 1.0,
-      "count": 1,
-      "item": "exnihiloabnormals:crushed_persimmon_travertine"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:hammer",
+        "input": {
+          "item": "atmospheric:persimmon_travertine"
+        },
+        "results": [
+          {
+            "chance": 1.0,
+            "count": 1,
+            "item": "exnihiloabnormals:crushed_persimmon_travertine"
+          }
+        ]
+      }
     }
   ]
 }

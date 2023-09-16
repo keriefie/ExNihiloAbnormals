@@ -1,15 +1,28 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "item": "atmospheric:arid_sand"
-  },
-  "result": {
-    "item": "atmospheric:aloe_kernels"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.05,
-      "mesh": "string"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "atmospheric:arid_sand"
+        },
+        "result": {
+          "item": "atmospheric:aloe_kernels"
+        },
+        "rolls": [
+          {
+            "chance": 0.05,
+            "mesh": "string"
+          }
+        ]
+      }
     }
   ]
 }

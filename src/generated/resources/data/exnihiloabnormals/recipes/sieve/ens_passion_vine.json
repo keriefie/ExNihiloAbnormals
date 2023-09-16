@@ -1,15 +1,28 @@
 {
-  "type": "exnihilosequentia:sieve",
-  "input": {
-    "item": "minecraft:sand"
-  },
-  "result": {
-    "item": "atmospheric:passion_vine"
-  },
-  "rolls": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 0.03,
-      "mesh": "string"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:sieve",
+        "input": {
+          "item": "minecraft:sand"
+        },
+        "result": {
+          "item": "atmospheric:passion_vine"
+        },
+        "rolls": [
+          {
+            "chance": 0.03,
+            "mesh": "string"
+          }
+        ]
+      }
     }
   ]
 }

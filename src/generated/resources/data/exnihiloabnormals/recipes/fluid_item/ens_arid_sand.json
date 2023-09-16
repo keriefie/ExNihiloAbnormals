@@ -1,12 +1,25 @@
 {
-  "type": "exnihilosequentia:fluid_item",
-  "fluid": {
-    "fluid": "exnihilosequentia:sea_water"
-  },
-  "input": {
-    "item": "minecraft:sand"
-  },
-  "result": {
-    "item": "atmospheric:arid_sand"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:fluid_item",
+        "fluid": {
+          "fluid": "exnihilosequentia:sea_water"
+        },
+        "input": {
+          "item": "minecraft:sand"
+        },
+        "result": {
+          "item": "atmospheric:arid_sand"
+        }
+      }
+    }
+  ]
 }

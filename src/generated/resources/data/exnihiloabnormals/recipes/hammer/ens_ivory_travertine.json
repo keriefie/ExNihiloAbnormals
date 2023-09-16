@@ -1,13 +1,26 @@
 {
-  "type": "exnihilosequentia:hammer",
-  "input": {
-    "item": "atmospheric:ivory_travertine"
-  },
-  "results": [
+  "type": "forge:conditional",
+  "recipes": [
     {
-      "chance": 1.0,
-      "count": 1,
-      "item": "exnihiloabnormals:crushed_ivory_travertine"
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "atmospheric"
+        }
+      ],
+      "recipe": {
+        "type": "exnihilosequentia:hammer",
+        "input": {
+          "item": "atmospheric:ivory_travertine"
+        },
+        "results": [
+          {
+            "chance": 1.0,
+            "count": 1,
+            "item": "exnihiloabnormals:crushed_ivory_travertine"
+          }
+        ]
+      }
     }
   ]
 }
