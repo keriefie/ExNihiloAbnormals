@@ -70,7 +70,6 @@ public class ENAHammerRecipeBuilder extends ExNihiloFinishedRecipe<ENAHammerReci
 
     @Override
     public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
-        this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
         return this;
     }
 

@@ -62,7 +62,6 @@ public class ENAFluidItemRecipeBuilder extends ExNihiloFinishedRecipe<ENAFluidIt
 
     @Override
     public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
-        this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
         return this;
     }
 

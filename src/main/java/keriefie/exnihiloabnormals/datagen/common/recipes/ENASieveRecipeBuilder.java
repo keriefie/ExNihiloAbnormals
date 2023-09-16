@@ -65,7 +65,6 @@ public class ENASieveRecipeBuilder extends ExNihiloFinishedRecipe<ENASieveRecipe
 
     @Override
     public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
-        this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
         return this;
     }
 
