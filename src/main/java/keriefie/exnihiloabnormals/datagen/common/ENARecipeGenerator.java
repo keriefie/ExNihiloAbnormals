@@ -628,8 +628,10 @@ public class ENARecipeGenerator extends AbstractRecipeGenerator {
 
     private void registerHeatRecipes(@Nonnull final Consumer<FinishedRecipe> consumer) {
         logger.debug("registerHeatRecipes");
-        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_TORCH.get(), 1, "cuptic_torch");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_TORCH.get(), 1, "cupric_torch");
+        createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_WALL_TORCH.get(), 1, "cupric_wall_torch");
         createConditionalHeatRecipe(consumer, ENDERGETIC_LOADED, EEBlocks.ENDER_TORCH.get(), 1, "ender_torch");
+        createConditionalHeatRecipe(consumer, ENDERGETIC_LOADED, EEBlocks.ENDER_WALL_TORCH.get(), 1, "ender_wall_torch");
         createConditionalHeatRecipe(consumer, CAVERNS_AND_CHASMS_LOADED, CCBlocks.CUPRIC_FIRE.get(), 4, "cupric_fire");
         createConditionalHeatRecipe(consumer, ENDERGETIC_LOADED, EEBlocks.ENDER_FIRE.get(), 4, "ender_fire");
 //        createConditionalHeatRecipe(consumer, UPGRADE_AQUATIC_LOADED, UABlocks.PINK_JELLY_TORCH.get(), 2, "pink_jelly_torch");
