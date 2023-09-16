@@ -3,7 +3,7 @@ loaderVersion="[43,)" #mandatory
 license="CC BY-NC-SA 4.0"
 [[mods]] #mandatory
 modId="exnihiloabnormals" #mandatory
-version="0.1.0" #mandatory ${file.jarVersion}
+version="0.1.1" #mandatory ${file.jarVersion}
 displayName="Ex Nihilo: Sequentia - Abnormals Addon" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
