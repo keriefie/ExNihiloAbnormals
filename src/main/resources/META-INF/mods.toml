@@ -56,7 +56,7 @@ Abnormals addon for Ex Nihilo: Sequentia.
     ordering="AFTER"
     side="BOTH"
 [[dependencies.exnihiloabnormals]]
-    modId="berrygood"
+    modId="berry_good"
     mandatory=false
     versionRange="[6.0.0,)"
     ordering="AFTER"
